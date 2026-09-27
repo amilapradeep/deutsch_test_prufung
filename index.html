@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="DTZ B1 Übung: Lesen, Hören und Schreiben" />
+  <title>DTZ Sprint · B1 Prüfungstrainer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="DTZ Sprint Startseite">
+        <span class="brand-mark">D</span>
+        <span><strong>DTZ Sprint</strong><small>B1 Prüfungstrainer</small></span>
+      </a>
+      <div class="top-actions">
+        <span class="save-status" id="saveStatus">Fortschritt lokal gespeichert</span>
+        <button type="button" class="icon-button" id="resetProgress" title="Antworten und Ergebnis löschen" aria-label="Antworten und Ergebnis löschen">↻</button>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Deutsch-Test für Zuwanderer · A2–B1</p>
+          <h1>Trainiere. Prüfe.<br><em>Werde sicher.</em></h1>
+          <p class="hero-text">Originalfragen aus offiziellen DTZ-Papieren als fokussierter digitaler Drill. Antworten auswählen, Abschnitt abgeben, Fehler sofort sehen.</p>
+          <div class="hero-meta"><span>▣ 4 Originalpapiere</span><span>◷ Hören 25 · Lesen 45 · Schreiben 30 Min.</span><span>↗ Offline-fähig</span></div>
+        </div>
+        <div class="hero-orbit" aria-hidden="true"><div class="orbit-ring ring-one"></div><div class="orbit-ring ring-two"></div><div class="orbit-dot dot-one"></div><div class="orbit-dot dot-two"></div><div class="orbit-core">DTZ<br><span>B1</span></div></div>
+      </section>
+
+      <section class="control-panel" aria-label="Testauswahl">
+        <div class="section-heading"><div><p class="eyebrow">01 · Auswahl</p><h2>Wähle ein Originalpapier</h2></div><span class="source-count" id="sourceCount">4 Tests</span></div>
+        <div class="paper-grid" id="paperGrid"></div>
+      </section>
+
+      <section class="workspace" id="workspace">
+        <div class="workspace-head">
+          <div><p class="eyebrow">Aktiver Übungssatz</p><h2 id="paperTitle">Übungssatz 1</h2><p class="muted" id="paperMeta"></p><p class="paper-score" id="paperScore" aria-live="polite"></p></div>
+          <a class="source-link" id="sourceLink" target="_blank" rel="noreferrer">Original-PDF öffnen ↗</a>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Prüfungsteile">
+          <button class="tab active" data-section="lesen" role="tab" aria-selected="true"><span class="tab-icon">L</span>Lesen <b id="lesenProgress">0%</b></button>
+          <button class="tab" data-section="hoeren" role="tab" aria-selected="false"><span class="tab-icon">H</span>Hören <b id="hoerenProgress">0%</b></button>
+          <button class="tab" data-section="schreiben" role="tab" aria-selected="false"><span class="tab-icon">S</span>Schreiben <b id="schreibenProgress">0%</b></button>
+        </div>
+        <div id="sectionContent"></div>
+      </section>
+
+      <section class="info-grid">
+        <article class="info-card accent-card"><span class="card-number">01</span><h3>So übst du</h3><p>Erst ohne Hilfe lösen. Dann „Abschnitt abgeben“. Falsche Antworten zeigen genau, worauf du achten musst.</p><button type="button" class="info-action" data-info-action="practice">Zum aktuellen Test →</button></article>
+        <article class="info-card"><span class="card-number">02</span><h3>DTZ-Benchmark</h3><p>Hören + Lesen zusammen: 33–45 Punkte = B1 · 20–32 = A2. Schreiben wird normalerweise von Prüfenden bewertet.</p><button type="button" class="info-action" data-info-action="benchmark">Ergebnis anzeigen →</button></article>
+        <article class="info-card"><span class="card-number">03</span><h3>Schreiben</h3><p>Schreibe deine Antwort hier. Nutze die vier Leitpunkte und kopiere deinen Text bei Bedarf in diesen Chat für Feedback.</p><button type="button" class="info-action" data-info-action="writing">Schreiben öffnen →</button></article>
+      </section>
+    </main>
+    <footer><span>DTZ Sprint · lokale Lernhilfe</span><span>Originalquelle oben verlinkt</span></footer>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="exam-data.js?v=2"></script>
+  <script src="app.js?v=9"></script>
+</body>
+</html>
