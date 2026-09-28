@@ -310,6 +310,82 @@
           { id: 'B', title: 'Aufgabe B', prompt: 'Ihre frühere Deutschlehrerin Frau Berg hat bald Geburtstag. Sie möchte eine Geburtstagsparty feiern und hat Ihnen eine Einladung geschickt. Antworten Sie auf diese Einladung.', points: ['Grund für Ihr Schreiben', 'Was Sie im Moment tun', 'Kommen Sie?', 'Bitte um Wegbeschreibung'], recipient: 'Frau Berg' }
         ]
       }
+    },
+
+    b1QuestionPaper: {
+      title: 'DTZ B1 · Modelltest Fragen',
+      provider: 'Lokale Markdown-Sammlung',
+      tag: 'B1-Übungsfragen',
+      url: 'exam/dtz_b1_question_paper.pdf',
+      hoeren: [],
+      lesen: [
+        mc('l1', 1, 'Sie suchen eine neue Kaffeemaschine.', options(['a', 'ab Seite 74'], ['b', 'ab Seite 105'], ['c', 'andere Seiten']), 'b'),
+        mc('l2', 2, 'Sie wollen mit ein paar Freunden eine Fahrradtour machen. Sie brauchen etwas gegen Regen.', options(['a', 'ab Seite 43'], ['b', 'ab Seite 50'], ['c', 'andere Seiten']), 'b'),
+        mc('l3', 3, 'Sie sind gerade umgezogen. Sie brauchen noch ein paar Teller und Tassen.', options(['a', 'ab Seite 77'], ['b', 'ab Seite 105'], ['c', 'andere Seiten']), 'a'),
+        mc('l4', 4, 'Sie sind zu einer großen Hochzeit eingeladen und wollen dafür ein Kleid kaufen.', options(['a', 'ab Seite 35'], ['b', 'ab Seite 74'], ['c', 'andere Seiten']), 'c'),
+        mc('l5', 5, 'Sie möchten eine Puppe für Ihre Tochter kaufen.', options(['a', 'ab Seite 74'], ['b', 'ab Seite 92'], ['c', 'andere Seiten']), 'b'),
+        mc('l6', 6, 'Aziza möchte gern in einer Wohngemeinschaft leben. Sie will aber ihre eigenen Möbel mitbringen.', matching, 'e'),
+        mc('l7', 7, 'Herr Mertkol sucht eine möblierte Wohnung.', matching, 'b'),
+        mc('l8', 8, 'Frau Rossi möchte ein kleines Apartment mieten. Die zentrale Lage ist für sie sehr wichtig. Sie will sofort einziehen.', matching, 'd'),
+        mc('l9', 9, 'Sylvia und Istvan suchen eine 2-Zimmer-Wohnung. Sie sind bereit, die Wohnung selbst zu renovieren, aber die Miete muss sehr niedrig sein.', matching, 'f'),
+        mc('l10', 10, 'Carlos möchte gern umziehen, weil er in der alten Wohnung zu wenig Platz hat. Außerdem möchte er, dass sein Hund auch allein draußen sein kann.', matching, 'g'),
+        tf('l11', 11, 'Es handelt sich um einen Test für neue Fahrzeuge.', 'richtig'),
+        mc('l12', 12, 'Wo kann man die Batterien des Elektroautos auftanken?', options(['a', 'An jeder Tankstelle.'], ['b', 'Nur am Stromautomaten.'], ['c', 'Zu Hause oder an den Stromautomaten.']), 'c'),
+        tf('l13', 13, 'Der Kinderspielplatz ist neu.', 'richtig'),
+        mc('l14', 14, 'Die Hausverwaltung möchte,', options(['a', 'dass die Kinder nicht im Sandkasten spielen.'], ['b', 'dass die Eltern mit ihren Kindern spielen.'], ['c', 'dass die Kinder nicht allein auf dem Spielplatz sind.']), 'c'),
+        tf('l15', 15, 'Die letzte Stromrechnung war zu hoch.', 'falsch'),
+        mc('l16', 16, 'Man bezahlt weniger,', options(['a', 'wenn man die Homepage des Anbieters besucht.'], ['b', 'wenn man keine schriftliche Rechnung bekommt.'], ['c', 'wenn man den Anbieter anruft.']), 'b'),
+        tf('l17', 17, 'Wenn man die Kanne nur selten benutzt, muss man sie erst ausspülen.', 'richtig'),
+        tf('l18', 18, 'Man kann die Kanne in der Maschine waschen.', 'falsch'),
+        tf('l19', 19, 'Heiße Milch darf man nicht in die Kanne gießen.', 'richtig'),
+        mc('l20', 20, 'Sehr ___ Damen und Herren,', options(['a', 'geehrter'], ['b', 'geehrten'], ['c', 'geehrte']), 'c'),
+        mc('l21', 21, 'Hiermit möchte ich ___ mitteilen, dass ich im vergangenen Monat umgezogen bin.', options(['a', 'Ihnen'], ['b', 'ihnen'], ['c', 'euch']), 'a'),
+        mc('l22', 22, 'Ich wohne jetzt nicht mehr in Bad Hersfeld, ___ in Siegen.', options(['a', 'aber'], ['b', 'doch'], ['c', 'sondern']), 'c'),
+        mc('l23', 23, '___ Sie mir bitte so schnell wie möglich mitteilen, an welche Adresse ich mich jetzt wenden kann?', options(['a', 'Müssten'], ['b', 'Dürfen'], ['c', 'Könnten']), 'c'),
+        mc('l24', 24, 'Ich ___ Ihnen dankbar, wenn Sie mir möglichst schnell antworten.', options(['a', 'wäre'], ['b', 'war'], ['c', 'sei']), 'a'),
+        mc('l25', 25, 'Ich wäre Ihnen dankbar, wenn Sie mir möglichst schnell antworten ___ .', options(['a', 'werden'], ['b', 'würden'], ['c', 'waren']), 'b')
+      ],
+      schreiben: {
+        tasks: [
+          { id: 'A', title: 'Aufgabe a', prompt: 'Sie haben eine neue Wohnung gemietet. Ihre Nachbarn, Herr und Frau Ebeler, haben Ihnen beim Umzug geholfen. Deshalb möchten Sie sie zum Essen einladen. Schreiben Sie eine Einladung.', points: ['Grund für Ihr Schreiben', 'Dank für die Hilfe', 'Termin', 'Was Sie vorbereiten möchten'], recipient: 'Herr und Frau Ebeler' },
+          { id: 'B', title: 'Aufgabe b', prompt: 'Sie suchen eine Arbeit. In der Zeitung haben Sie eine Anzeige für eine Stelle in einer Firma gelesen. Die Stelle interessiert Sie. Schreiben Sie eine Bewerbung an die Firma.', points: ['Grund für Ihr Schreiben', 'Schule und Ausbildung', 'Berufserfahrung', 'Sprachkenntnisse'], recipient: 'Sehr geehrte Damen und Herren' }
+        ]
+      }
+    },
+
+    b1ExtraPractice: {
+      title: 'DTZ B1 · Zusätzliche Übungen',
+      provider: 'Lokale Markdown-Sammlung',
+      tag: 'B1-Übungsfragen',
+      url: 'exam/dtz_b1_extra_questions_practice.pdf',
+      hoeren: [],
+      lesen: [
+        mc('l1', 1, 'Caroline arbeitet seit fünf Jahren in Deutschland, ihr Freund kommt aus den Niederlanden. Sie möchte seine Sprache lernen.', matching, 'b'),
+        mc('l2', 2, 'Istvan L. spricht bisher nur wenig Deutsch und will es möglichst schnell lernen. Er arbeitet in einer Computerfirma, aber am Vormittag hat er immer frei.', matching, 'f'),
+        mc('l3', 3, 'Frau Neumann lernt seit fünf Jahren an der Volkshochschule Türkisch. Sie möchte türkische Konversation machen und vielleicht eine Freundin finden.', matching, 'g'),
+        mc('l4', 4, 'Herr Brandhorst soll in drei Monaten für seine Firma nach Saudi-Arabien gehen. Er hat zweimal wöchentlich am Nachmittag frei für den Arabischunterricht.', matching, 'x'),
+        mc('l5', 5, 'Frau Sikorska sucht einen Deutschkurs für Fortgeschrittene, der zweimal pro Woche am Nachmittag stattfindet.', matching, 'a'),
+        tf('l6', 6, 'Für diese Produkte muss der Kunde kein Geld bezahlen.', 'falsch'),
+        tf('l7', 7, 'In dem Prämien-Programm wird kein Spielzeug angeboten.', 'falsch'),
+        tf('l8', 8, 'Wenn man vom IDEAS-Prämienprogramm keine Post mehr bekommen möchte, kann man es telefonisch abbestellen.', 'richtig'),
+        mc('l9', 9, 'Sehr geehrte ___,', options(['a', 'Frau'], ['b', 'Damen und Herren'], ['c', 'Herr']), 'b'),
+        mc('l10', 10, 'Mit den Artikeln in ___ Zeitung bin ich durchaus einverstanden.', options(['a', 'seiner'], ['b', 'Ihren'], ['c', 'Ihrer']), 'c'),
+        mc('l11', 11, 'Am 1. August ___ ich die erste Zeitung bekommen.', options(['a', 'hätte'], ['b', 'habe'], ['c', 'sollte']), 'b'),
+        mc('l12', 12, 'Dafür waren in der folgenden Woche jeden Tag zwei Zeitungen in ___ Briefkasten.', options(['a', 'deinem'], ['b', 'Ihrem'], ['c', 'meinem']), 'c'),
+        mc('l13', 13, 'Über eine kurze Antwort von Ihnen ___ ich mich freuen.', options(['a', 'habe'], ['b', 'würde'], ['c', 'wird']), 'b'),
+        mc('l14', 14, 'Mit ___ Grüßen', options(['a', 'frohen'], ['b', 'fröhlichen'], ['c', 'freundlichen']), 'c')
+      ],
+      schreiben: {
+        tasks: [
+          { id: 'A', title: 'Defekter Boiler', prompt: 'Schreiben Sie eine E-Mail an Ihre Hausverwaltung, Herrn Broderson, weil der Boiler in Ihrem Badezimmer nicht funktioniert und es deshalb kein heißes Wasser gibt.', points: ['Grund für Ihr Schreiben', 'Was die Hausverwaltung unternehmen soll', 'Warum es dringend ist', 'Was Sie unternehmen werden, wenn die Hausverwaltung nicht reagiert'], recipient: 'Herr Broderson' },
+          { id: 'B', title: 'Einladung zur Geburtstagsfeier', prompt: 'Sie wohnen seit kurzer Zeit in einer neuen Wohnung. Ihre Frau hat Geburtstag, Sie machen eine kleine Feier und möchten Ihre Nachbarn dazu einladen. Schreiben Sie eine Einladung.', points: ['Grund für Ihr Schreiben', 'Termin für die Feier', 'Wo die Feier stattfindet', 'Was Sie vorbereiten werden'], recipient: 'Ihre Nachbarn' },
+          { id: 'C', title: 'Absage wegen Terminüberschneidung', prompt: 'Istvan, ein Bekannter aus Ihrem ersten Deutschkurs, der jetzt in einer anderen Stadt lebt, möchte Sie am Wochenende zu sich aufs Land einladen. Leider können Sie nicht hinfahren. Schreiben Sie eine Entschuldigung.', points: ['Grund für Ihr Schreiben', 'Dank für die Einladung', 'Warum Sie nicht kommen können', 'Wann Sie ihn besuchen könnten'], recipient: 'Istvan' },
+          { id: 'D', title: 'Elternsprechstunde absagen', prompt: 'Ihr Sohn bringt aus der Schule einen Brief mit, in dem Sie zu einer Elternsprechstunde gebeten werden. Leider können Sie zu dem Termin nicht und möchten sich entschuldigen. Schreiben Sie einen Brief an den Klassenlehrer, Herrn Rink.', points: ['Grund für Ihr Schreiben', 'Dank für den Brief', 'Warum Sie nicht kommen können', 'Bitte um einen anderen Termin'], recipient: 'Herr Rink' },
+          { id: 'E', title: 'Hilfe beim Kindergarten-Sommerfest', prompt: 'Der Kindergarten Ihres Kindes macht ein Sommerfest und bittet alle Eltern, bei den Vorbereitungen zu helfen. Schreiben Sie an Frau Fohrer im Kindergarten.', points: ['Grund für Ihr Schreiben', 'Angebot mitzuhelfen', 'Vorschläge, was Sie machen könnten', 'Wie viel Zeit Sie haben'], recipient: 'Frau Fohrer' },
+          { id: 'F', title: 'Einladung zum Ausflug', prompt: 'Sie möchten Ihren ehemaligen Kollegen und seine Frau, Familie Branic, die jetzt in eine andere Stadt gezogen sind, zu einem gemeinsamen Ausflug einladen. Schreiben Sie über die vier Leitpunkte.', points: ['Grund für Ihr Schreiben', 'Ziel', 'Wo und wann Sie sich treffen wollen', 'Was sie mitnehmen sollen'], recipient: 'Familie Branic' },
+          { id: 'G', title: 'Absage Weihnachtsfeier', prompt: 'Sie sind am Freitagabend zur Weihnachtsfeier Ihrer Firma eingeladen, können aber leider nicht teilnehmen. Antworten Sie Herrn Somson mit einem kurzen Schreiben.', points: ['Grund für Ihr Schreiben', 'Dank für die Einladung', 'Warum Sie nicht kommen können', 'Weihnachtswünsche'], recipient: 'Herr Somson' }
+        ]
+      }
     }
   };
 })();

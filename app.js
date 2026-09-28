@@ -262,9 +262,10 @@ function renderAll() {
   const p = current();
   renderPaperCards();
   $('#paperTitle').textContent = p.title;
-  $('#paperMeta').textContent = `${p.provider} · ${p.tag} · Fragen und Antwortschlüssel aus dem Original-PDF`;
+  $('#paperMeta').textContent = `${p.provider} · ${p.tag} · Fragen und Antwortschlüssel aus der Quelle`;
   $('#paperScore').innerHTML = paperScoreHTML(state.paper);
   $('#sourceLink').href = p.url;
+  $('#sourceLink').textContent = 'Quelle öffnen ↗';
   document.querySelectorAll('.tab').forEach(tab => {
     const active = tab.dataset.section === state.section;
     tab.classList.toggle('active', active);
@@ -281,8 +282,8 @@ function progress(section) {
     const task = writingTask();
     return draftFor(task.id).trim() ? '1/1' : '0/1';
   }
-  const items = current()[section];
-  return `${Object.keys(answersFor(section)).length}/${items.length}`;
+  const items = current()[section] || [];
+  return items.length ? `${Object.keys(answersFor(section)).length}/${items.length}` : '—';
 }
 
 const OBJECTIVE_SECTIONS = ['lesen', 'hoeren'];
@@ -291,7 +292,7 @@ const SECTION_LABELS = { lesen: 'Lesen', hoeren: 'Hören' };
 function paperResult(paperId) {
   const paper = SOURCES[paperId];
   const savedPaper = state.checked[paperId] || {};
-  const sections = OBJECTIVE_SECTIONS.map(section => {
+  const sections = OBJECTIVE_SECTIONS.filter(section => Array.isArray(paper[section]) && paper[section].length).map(section => {
     const items = paper[section];
     const answers = savedPaper[section] || {};
     const submitted = Boolean(savedPaper[`${section}_submitted`]);
@@ -322,7 +323,10 @@ function benchmarkLabel(score) {
 function paperScoreLabel(paperId) {
   const result = paperResult(paperId);
   if (!result.submittedSections.length) return 'Noch kein Ergebnis';
-  if (result.complete) return `${result.score}/${result.total} Punkte · ${benchmarkLabel(result.score)}`;
+  if (result.complete) {
+    const hasListening = result.sections.some(section => section.section === 'hoeren');
+    return `${result.score}/${result.total} Punkte · ${hasListening ? benchmarkLabel(result.score) : 'nur Lesen'}`;
+  }
   return result.submittedSections.map(section => `${SECTION_LABELS[section.section]} ${section.score}/${section.total}`).join(' · ');
 }
 
@@ -335,7 +339,10 @@ function paperScoreHTML(paperId) {
   if (!result.complete) {
     return `<strong>${esc(details)}</strong> · Zweiter Abschnitt noch offen.`;
   }
-  return `<strong>${result.score} / ${result.total} Punkte · ${benchmarkLabel(result.score)}</strong> <span>Hören + Lesen · Schreiben separat bewertet</span><br><small>${esc(details)}</small>`;
+  const hasListening = result.sections.some(section => section.section === 'hoeren');
+  const benchmark = hasListening ? ` · ${benchmarkLabel(result.score)}` : ' · nur Lesen';
+  const objectiveLabel = hasListening ? 'Hören + Lesen' : 'Hören nicht hinterlegt';
+  return `<strong>${result.score} / ${result.total} Punkte${benchmark}</strong> <span>${objectiveLabel} · Schreiben separat bewertet</span><br><small>${esc(details)}</small>`;
 }
 
 function renderSection() {
@@ -362,12 +369,14 @@ function audioPlayerHTML() {
 function sourceNotice(section, includeAudio = true) {
   const paper = current();
   const text = section === 'lesen'
-    ? 'Lesetexte und Anzeigen bleiben im Original-PDF. Diese Seite enthält nur die Originalfragen, Antwortmöglichkeiten und den Lösungsschlüssel.'
-    : 'Die Fragen und Antwortmöglichkeiten sind original. Starte den Hörtext, bevor du deine Lösungen markierst.';
+    ? 'Lesetexte und Anzeigen bleiben in der Quelle. Diese Seite enthält nur die Fragen, Antwortmöglichkeiten und den Lösungsschlüssel.'
+    : paper.audio
+      ? 'Die Fragen und Antwortmöglichkeiten sind original. Starte den Hörtext, bevor du deine Lösungen markierst.'
+      : 'Für diesen Test ist keine Audiodatei hinterlegt.';
   const audio = section === 'hoeren'
-    ? includeAudio ? audioPlayerHTML() : '<div class="audio-player-placeholder"></div>'
+    ? includeAudio ? audioPlayerHTML() : paper.audio ? '<div class="audio-player-placeholder"></div>' : ''
     : '';
-  return `${audio}<div class="reading-bank source-note"><div class="reading-bank-head"><span>Originalquelle</span><small>${esc(paper.provider)} · ${esc(paper.title)}</small></div><p class="muted">${text}</p><a class="source-link" href="${esc(paper.url)}" target="_blank" rel="noreferrer">Original-PDF öffnen ↗</a></div>`;
+  return `${audio}<div class="reading-bank source-note"><div class="reading-bank-head"><span>Quelle</span><small>${esc(paper.provider)} · ${esc(paper.title)}</small></div><p class="muted">${text}</p><a class="source-link" href="${esc(paper.url)}" target="_blank" rel="noreferrer">Quelle öffnen ↗</a></div>`;
 }
 
 function bindAudioPlayer() {
@@ -396,10 +405,14 @@ function bindAudioPlayer() {
 }
 
 function renderQuestions(section) {
-  const items = current()[section];
+  const items = current()[section] || [];
+  const label = section === 'hoeren' ? 'Hören' : 'Lesen';
+  if (!items.length) {
+    content.innerHTML = `<div class="section-intro"><div><h3>${label}</h3><p>Für diesen Test sind keine ${label}-Fragen hinterlegt.</p></div></div>${sourceNotice(section, false)}`;
+    return;
+  }
   const answers = answersFor(section);
   const submitted = Boolean(state.checked[state.paper]?.[`${section}_submitted`]);
-  const label = section === 'hoeren' ? 'Hören' : 'Lesen';
   const intro = section === 'hoeren'
     ? 'Lies zuerst die Antwortmöglichkeiten. Danach markiere deine Lösung.'
     : 'Wähle für jede Aufgabe genau eine Lösung.';
