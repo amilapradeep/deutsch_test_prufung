@@ -36,6 +36,15 @@
     ['f', 'In der ganztägigen Grundschule machen die Kinder Lernspiele am Computer.']
   );
 
+  const goetheChildren = options(
+    ['a', 'Kinder sollten viel Zeit mit Erwachsenen verbringen.'],
+    ['b', 'Es ist wichtig, dass man sich Zeit nur für die Kinder nimmt, auch wenn es nicht viel ist.'],
+    ['c', 'Kinder sollten bis zum Schulalter bei ihrer Mutter zu Hause bleiben können.'],
+    ['d', 'Kinder sollten früh in den Kindergarten.'],
+    ['e', 'Der Kindergarten ist besonders nützlich für ausländische Kinder.'],
+    ['f', 'Kindererziehung zu Hause ist eine Frage des Geldes.']
+  );
+
   window.EXTRA_SOURCES = {
     gast2: {
       title: 'Übungssatz 2',
@@ -232,6 +241,73 @@
         tasks: [
           { id: 'A', title: 'Aufgabe A', prompt: 'Sie haben ein interessantes Wohnungsangebot gelesen. Sie schreiben einen Brief an den Vermieter, Herrn Schmitz, weil Sie sich für die Wohnung interessieren.', points: ['Grund für Ihr Schreiben', 'Angaben zu Ihrer Person', 'Termin für Besichtigung', 'möglicher Einzugstermin'], recipient: 'Herr Schmitz' },
           { id: 'B', title: 'Aufgabe B', prompt: 'Sie haben vor einem halben Jahr bei der Firma Neumann eine Waschmaschine gekauft. Jetzt ist sie kaputt. Sie erreichen bei der Firma telefonisch niemanden. Deshalb schreiben Sie eine E-Mail.', points: ['Grund für Ihr Schreiben', 'Garantie', 'Reparatur oder neue Waschmaschine', 'wie Sie erreichbar sind'], recipient: 'Sehr geehrte Damen und Herren' }
+        ]
+      }
+    },
+
+    goetheModellsatz: {
+      title: 'DTZ-Modellsatz · Erwachsene (2009)',
+      provider: 'Goethe-Institut & telc · 2009',
+      tag: 'offizieller Modellsatz',
+      url: 'https://www.goethe.de/resources/files/pdf209/dtz_modellsatz_e_2009_08.pdf',
+      audio: {
+        url: 'audio/dtz-goethe-modellsatz.mp3',
+        downloadUrl: 'https://www.goethe.de/resources/files/epub1/modellsatz.zip',
+        label: 'Goethe-Institut · Modellsatz Hören'
+      },
+      hoeren: [
+        mc('h1', 1, 'Was soll Frau Aslan machen?', options(['a', 'In der Praxis anrufen.'], ['b', 'In die Praxis kommen.'], ['c', 'Sich untersuchen lassen.']), 'a'),
+        mc('h2', 2, 'Was soll Frau Yang tun?', options(['a', 'Eine Gebühr bezahlen.'], ['b', 'Einen neuen Antrag ausfüllen.'], ['c', 'Zur Wohngeldstelle gehen.']), 'c'),
+        mc('h3', 3, 'Wie können Sie heute mit dem Zug nach Lübeck fahren?', options(['a', 'Mit dem Zug um 20 Uhr 05.'], ['b', 'Gar nicht.'], ['c', 'Nach Bad Oldesloe fahren und da umsteigen.']), 'c'),
+        mc('h4', 4, 'Sie brauchen schnell einen Termin. Was sollen Sie machen?', options(['a', 'Bei einem anderen Arzt anrufen.'], ['b', 'Bis zum 15. April warten.'], ['c', 'Heute noch einmal anrufen.']), 'a'),
+        mc('h5', 5, 'Was hören Sie?', options(['a', 'Den Wetterbericht.'], ['b', 'Die Nachrichten.'], ['c', 'Eine Verkehrsmeldung.']), 'b'),
+        mc('h6', 6, 'Wie wird das Wetter in Norddeutschland?', options(['a', 'Die Sonne scheint.'], ['b', 'Es gibt Regen.'], ['c', 'Es wird warm.']), 'b'),
+        mc('h7', 7, 'Wo laufen Leute auf der Straße?', options(['a', 'Auf der A6.'], ['b', 'Auf der A8.'], ['c', 'Auf der A92.']), 'c'),
+        mc('h8', 8, 'Wie bekommt man zwei Gratiskarten?', options(['a', 'Bis zum 28. Mai schreiben.'], ['b', 'Auf die Homepage schauen.'], ['c', 'Eine Nummer anrufen.']), 'c'),
+        mc('h9', 9, 'Was sollen Sie tun?', options(['a', 'Nach draußen gehen.'], ['b', 'Fenster und Türen schließen und zu Hause bleiben.'], ['c', 'Fenster und Türen zumachen und aus dem Haus gehen.']), 'b'),
+        tf('h10', 10, 'Frau Hansen und der Mann sind Kollegen.', 'falsch'),
+        mc('h11', 11, 'Worum bittet Frau Hansen?', options(['a', 'Die Musik leiser zu spielen.'], ['b', 'Ihr Schmerztabletten zu holen.'], ['c', 'Keinen Besuch zu haben.']), 'a'),
+        tf('h12', 12, 'Markus und Tina wollen heiraten.', 'falsch'),
+        mc('h13', 13, 'Worüber sprechen Markus und Tina?', options(['a', 'Über einen Geschenketisch.'], ['b', 'Über einen Tisch als Geschenk.'], ['c', 'Über Tische und Stühle für das Hochzeitsfest.']), 'a'),
+        tf('h14', 14, 'Der Mann hilft Frau Bergmann bei der Arbeitssuche.', 'richtig'),
+        mc('h15', 15, 'Was fragt er Frau Bergmann?', options(['a', 'Ob sie Berufserfahrung hat.'], ['b', 'Ob sie in Teilzeit arbeiten kann.'], ['c', 'Wie viel sie bis jetzt verdient hat.']), 'a'),
+        tf('h16', 16, 'Die Lehrerin telefoniert mit Igor.', 'falsch'),
+        mc('h17', 17, 'Frau Bergner', options(['a', 'möchte, dass Igor die Klasse wiederholt.'], ['b', 'möchte, dass Igor mit seiner Mutter zu ihr kommt.'], ['c', 'möchte mit Igors Vater oder Mutter in der Schule sprechen.']), 'c'),
+        mc('h18', 18, '18 ...', goetheChildren, 'd'),
+        mc('h19', 19, '19 ...', goetheChildren, 'f'),
+        mc('h20', 20, '20 ...', goetheChildren, 'e')
+      ],
+      lesen: [
+        mc('l21', 21, 'Sie möchten ein gebrauchtes Auto kaufen.', options(['a', 'Audio'], ['b', 'Reise'], ['c', 'andere Seite']), 'c'),
+        mc('l22', 22, 'Eine Bekannte hört gerne Geschichten. Wo finden Sie ein passendes Geschenk?', options(['a', 'Filme & DVDs'], ['b', 'Bücher'], ['c', 'andere Seite']), 'b'),
+        mc('l23', 23, 'Sie ziehen in zwei Wochen in eine neue Wohnung und suchen dafür Kartons.', options(['a', 'Möbel & Wohnen'], ['b', 'Heimwerker'], ['c', 'andere Seite']), 'b'),
+        mc('l24', 24, 'Sie brauchen am Arbeitsplatz eine Kaffeemaschine.', options(['a', 'Feinschmecker'], ['b', 'Heimwerker'], ['c', 'andere Seite']), 'c'),
+        mc('l25', 25, 'Sie arbeiten abends zu Hause und suchen eine Schreibtischlampe.', options(['a', 'Büro'], ['b', 'Möbel & Wohnen'], ['c', 'andere Seite']), 'b'),
+        mc('l26', 26, 'Frau Seifert ist Friseurin und möchte stundenweise arbeiten. Sie wohnt in Berlin.', matching, 'c'),
+        mc('l27', 27, 'Frau Richter sucht eine Ausbildungsstelle als Köchin ab September.', matching, 'a'),
+        mc('l28', 28, 'Herr Seibold sucht einen Job als Maler und Tapezierer.', matching, 'x'),
+        mc('l29', 29, 'Herr Kindler sucht Arbeit in einer KFZ-Werkstatt. Er will auch junge Menschen ausbilden.', matching, 'f'),
+        mc('l30', 30, 'Frau Kerschel möchte sich ein Auto kaufen und braucht dafür Geld. Deshalb will sie während des Sommers zusätzlich etwas verdienen.', matching, 'e'),
+        tf('l31', 31, 'Das Land Hessen gibt zukünftig eine halbe Million Euro für Integrationshelfer aus.', 'richtig'),
+        mc('l32', 32, 'Das Ministerium möchte, dass', options(['a', '800 Helfer mehr eingestellt werden.'], ['b', 'die Arbeit der Helfer mehr Wirkung hat.'], ['c', 'die Helfer für ihre Arbeit mehr Geld verdienen.']), 'b'),
+        tf('l33', 33, 'Die Eltern sollen den Kindergarten putzen.', 'falsch'),
+        mc('l34', 34, 'Das Kindergartenteam möchte, dass die Eltern', options(['a', 'das Programm planen und organisieren.'], ['b', 'etwas mitbringen oder bezahlen.'], ['c', 'Lieder singen oder Sommerblumen basteln.']), 'b'),
+        tf('l35', 35, 'Ab 1. Februar muss Familie Müller mehr Miete zahlen.', 'falsch'),
+        mc('l36', 36, 'Familie Müller', options(['a', 'braucht ab Februar nichts mehr für die Nebenkosten auszugeben.'], ['b', 'hat zu viel an Nebenkosten bezahlt.'], ['c', 'muss im kommenden Jahr 150 Euro Nebenkosten bezahlen.']), 'b'),
+        tf('l37', 37, 'Man soll die Tabletten nicht vor dem Essen nehmen.', 'richtig'),
+        tf('l38', 38, 'Nachdem man die Tabletten genommen hat, darf man nicht selbst Auto fahren.', 'falsch'),
+        tf('l39', 39, 'Während der gesamten Schwangerschaft darf das Medikament auf keinen Fall eingenommen werden.', 'falsch'),
+        mc('l40', 40, '___ Damen und Herren,', options(['a', 'Sehr geehrte'], ['b', 'Sehr geehrten'], ['c', 'Viel geehrte']), 'a'),
+        mc('l41', 41, 'Die zwei Wochen Probelesen Ihrer Tageszeitung enden für ___ am 17.5.2008.', options(['a', 'mein'], ['b', 'mich'], ['c', 'mir']), 'b'),
+        mc('l42', 42, 'Hiermit ___ ich mein Probeabonnement fristgerecht kündigen.', options(['a', 'kann'], ['b', 'möchte'], ['c', 'soll']), 'b'),
+        mc('l43', 43, 'Leider ___ ich feststellen, dass ich nicht genug Zeit für regelmäßiges Zeitunglesen habe.', options(['a', 'konnte'], ['b', 'musste'], ['c', 'sollte']), 'a'),
+        mc('l44', 44, '___ möchte ich die Norddeutsche Zeitung nicht weiter abonnieren.', options(['a', 'Denn'], ['b', 'Deshalb'], ['c', 'Weil']), 'b'),
+        mc('l45', 45, 'Mit ___ Grüßen,', options(['a', 'freundlichen'], ['b', 'lieben'], ['c', 'vielen']), 'a')
+      ],
+      schreiben: {
+        tasks: [
+          { id: 'A', title: 'Aufgabe A', prompt: 'Sie besuchen einen Deutschkurs. Sie können diese Woche nicht mehr in den Kurs kommen. Deshalb schreiben Sie an Ihre Lehrerin Frau Meinert.', points: ['Grund für Ihr Schreiben', 'Entschuldigung', 'Hausaufgaben', 'Rückkehr in den Kurs'], recipient: 'Frau Meinert' },
+          { id: 'B', title: 'Aufgabe B', prompt: 'Ihre frühere Deutschlehrerin Frau Berg hat bald Geburtstag. Sie möchte eine Geburtstagsparty feiern und hat Ihnen eine Einladung geschickt. Antworten Sie auf diese Einladung.', points: ['Grund für Ihr Schreiben', 'Was Sie im Moment tun', 'Kommen Sie?', 'Bitte um Wegbeschreibung'], recipient: 'Frau Berg' }
         ]
       }
     }

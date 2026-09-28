@@ -1,14 +1,15 @@
 # DTZ Sprint · B1 Prüfungstrainer
 
-Lokale Lernseite zum Üben des **Deutsch-Tests für Zuwanderer (DTZ)** auf A2–B1-Niveau. Die Seite enthält derzeit vier Übungstests mit den Bereichen Lesen, Hören und Schreiben.
+Lokale Lernseite zum Üben des **Deutsch-Tests für Zuwanderer (DTZ)** auf A2–B1-Niveau. Die Seite enthält derzeit fünf Übungstests mit den Bereichen Lesen, Hören und Schreiben.
 
 ## Aktueller Stand
 
-- 4 Übungstests:
+- 5 Übungstests:
   - g.a.s.t. Übungssatz 1
   - g.a.s.t. Übungssatz 2
   - telc „Auf jeden Fall! B1.2“
   - telc Deutsch-Test für Zuwanderer Übungstest 1
+  - Goethe-Institut/telc DTZ-Modellsatz · Erwachsene (2009)
 - Lesen: Fragen, Antworten, automatische Auswertung und Lösungshinweise
 - Hören: Fragen, Auswertung und Audio-Player
 - Schreiben: zwei Aufgaben pro Test, Textfeld, Wortzählung und Selbstcheck
