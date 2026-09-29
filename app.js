@@ -38,6 +38,15 @@ const SUNDAY_OPTIONS = mcOptions(
   ['f', 'Sonntags sollten auch Banken offen haben.']
 );
 
+const TIMER_DURATIONS = {
+  lesen: 45 * 60,
+  hoeren: 25 * 60,
+  schreiben: 30 * 60
+};
+
+const TIMER_LABELS = { lesen: 'Lesen', hoeren: 'Hören', schreiben: 'Schreiben' };
+let timerTicker = null;
+
 const SOURCES = {
   gast1: {
     title: 'Übungssatz 1',
@@ -208,6 +217,7 @@ const state = {
   checked: {},
   text: {},
   checks: {},
+  timers: {},
   writingTask: 'A'
 };
 
@@ -228,6 +238,7 @@ if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
   state.checked = saved.checked && typeof saved.checked === 'object' && !Array.isArray(saved.checked) ? saved.checked : {};
   state.text = saved.text && typeof saved.text === 'object' && !Array.isArray(saved.text) ? saved.text : {};
   state.checks = saved.checks && typeof saved.checks === 'object' && !Array.isArray(saved.checks) ? saved.checks : {};
+  state.timers = saved.timers && typeof saved.timers === 'object' && !Array.isArray(saved.timers) ? saved.timers : {};
   state.writingTask = saved.writingTask || 'A';
 }
 
@@ -245,6 +256,213 @@ function current() { return SOURCES[state.paper]; }
 function answersFor(section) { return state.checked[state.paper]?.[section] || {}; }
 function draftFor(taskId) { return state.text[state.paper]?.schreiben?.[taskId] || ''; }
 
+function timerFor(paperId = state.paper, section) {
+  return state.timers?.[paperId]?.[section] || null;
+}
+
+function sectionHasContent(paperId, section) {
+  const paper = SOURCES[paperId];
+  if (!paper) return false;
+  return section === 'schreiben'
+    ? Boolean(paper.schreiben?.tasks?.length)
+    : Boolean(paper[section]?.length);
+}
+
+function sectionSubmitted(paperId = state.paper, section) {
+  return Boolean(state.checked[paperId]?.[`${section}_submitted`]);
+}
+
+function sectionLocked(paperId = state.paper, section) {
+  return Boolean(state.checked[paperId]?.[`${section}_locked`]);
+}
+
+function formatTimer(seconds) {
+  const total = Math.max(0, Math.ceil(Number(seconds) || 0));
+  const minutes = Math.floor(total / 60);
+  const remainder = total % 60;
+  return `${String(minutes).padStart(2, '0')}:${String(remainder).padStart(2, '0')}`;
+}
+
+function timerRemaining(paperId, section) {
+  const timer = timerFor(paperId, section);
+  if (!timer?.startedAt) return TIMER_DURATIONS[section] || 0;
+  if (timer.expired) return 0;
+  return Math.max(0, Math.ceil((Number(timer.endsAt) - Date.now()) / 1000));
+}
+
+function timerRunning(timer) {
+  return Boolean(timer?.startedAt && !timer.stopped && !timer.expired && Number(timer.endsAt) > Date.now());
+}
+
+function hasRunningTimers() {
+  return Object.values(state.timers || {}).some(paperTimers => Object.entries(paperTimers || {}).some(([section, timer]) => TIMER_DURATIONS[section] && timerRunning(timer)));
+}
+
+function ensureTimerTicker() {
+  if (timerTicker || !hasRunningTimers()) return;
+  timerTicker = setInterval(() => {
+    const expired = processExpiredTimers();
+    if (expired.current) renderAll();
+    else updateTimerDisplay();
+    if (!hasRunningTimers()) {
+      clearInterval(timerTicker);
+      timerTicker = null;
+    }
+  }, 1000);
+}
+
+function expireTimer(paperId, section) {
+  const timer = timerFor(paperId, section);
+  if (!timer || timer.expired) return false;
+  timer.expired = true;
+  timer.stopped = true;
+  timer.endsAt = Date.now();
+  if (!state.checked[paperId]) state.checked[paperId] = {};
+  state.checked[paperId][`${section}_submitted`] = true;
+  state.checked[paperId][`${section}_locked`] = true;
+  if (paperId === state.paper) {
+    if (section === 'hoeren') $('#hearingAudio')?.pause();
+    showToast(`${TIMER_LABELS[section]}: Zeit abgelaufen · Antworten abgegeben`);
+  }
+  return true;
+}
+
+function processExpiredTimers() {
+  const now = Date.now();
+  let changed = false;
+  let currentChanged = false;
+  Object.entries(state.timers || {}).forEach(([paperId, paperTimers]) => {
+    Object.entries(paperTimers || {}).forEach(([section, timer]) => {
+      if (!TIMER_DURATIONS[section] || !timer?.startedAt || timer.stopped || timer.expired) return;
+      if (Number(timer.endsAt) <= now && expireTimer(paperId, section)) {
+        changed = true;
+        currentChanged = currentChanged || (paperId === state.paper && section === state.section);
+      }
+    });
+  });
+  if (changed) save();
+  return { changed, current: currentChanged };
+}
+
+function startSectionTimer(section) {
+  if (!TIMER_DURATIONS[section] || !sectionHasContent(state.paper, section)) return;
+  processExpiredTimers();
+  if (sectionSubmitted() || sectionLocked()) {
+    renderAll();
+    return;
+  }
+  const existing = timerFor(state.paper, section);
+  if (timerRunning(existing) || existing?.stopped || existing?.expired) return;
+  const now = Date.now();
+  if (!state.timers[state.paper]) state.timers[state.paper] = {};
+  state.timers[state.paper][section] = {
+    startedAt: now,
+    endsAt: now + TIMER_DURATIONS[section] * 1000
+  };
+  save();
+  ensureTimerTicker();
+  renderAll();
+}
+
+function stopSectionTimer(section) {
+  const timer = timerFor(state.paper, section);
+  if (timer && timerRunning(timer)) {
+    timer.stopped = true;
+    timer.stoppedAt = Date.now();
+  }
+}
+
+function timerInfo(section, paperId = state.paper) {
+  const timer = timerFor(paperId, section);
+  const submitted = sectionSubmitted(paperId, section);
+  const locked = sectionLocked(paperId, section);
+  const running = timerRunning(timer);
+  const startsWithAudio = section === 'hoeren' && Boolean(SOURCES[paperId]?.audio);
+  let status = 'Bereit';
+  let className = 'ready';
+  if (locked || timer?.expired) {
+    status = 'Gesperrt · Zeit abgelaufen';
+    className = 'expired';
+  } else if (running) {
+    status = 'Läuft';
+    className = 'running';
+  } else if (submitted) {
+    status = 'Abgegeben';
+    className = 'done';
+  } else if (timer?.stopped) {
+    status = 'Beendet · zurücksetzen';
+    className = 'done';
+  } else if (startsWithAudio) {
+    status = 'Start mit Audio';
+  }
+  return {
+    timer,
+    submitted,
+    locked,
+    running,
+    status,
+    className,
+    seconds: timerRemaining(paperId, section),
+    canStart: !startsWithAudio && !submitted && !locked && !running && !timer?.stopped && !timer?.expired
+  };
+}
+
+function timerHTML(section) {
+  const info = timerInfo(section);
+  const startButton = info.canStart
+    ? `<button type="button" class="timer-start" data-start-timer="${section}">Timer starten</button>`
+    : '';
+  return `<div class="section-timer ${info.className}" data-section-timer="${section}"><span class="timer-label">${TIMER_LABELS[section]}</span><strong data-timer-value>${formatTimer(info.seconds)}</strong><span class="timer-status" data-timer-status>${info.status}</span>${startButton}</div>`;
+}
+
+function sectionActionsHTML(section, extra = '') {
+  return `<div class="section-actions">${timerHTML(section)}${extra}<button type="button" class="secondary-button section-reset" data-reset-section="${section}">Abschnitt zurücksetzen</button></div>`;
+}
+
+function bindSectionControls(section) {
+  content.querySelector(`[data-start-timer="${section}"]`)?.addEventListener('click', () => startSectionTimer(section));
+  content.querySelector(`[data-reset-section="${section}"]`)?.addEventListener('click', () => resetSection(section));
+}
+
+function updateTimerDisplay() {
+  const value = content.querySelector('[data-timer-value]');
+  if (!value) return;
+  const info = timerInfo(state.section);
+  value.textContent = formatTimer(info.seconds);
+  const status = content.querySelector('[data-timer-status]');
+  if (status) status.textContent = info.status;
+  const timer = content.querySelector('[data-section-timer]');
+  if (timer) timer.className = `section-timer ${info.className}`;
+}
+
+function resetSection(section) {
+  if (!sectionHasContent(state.paper, section)) return;
+  if (!confirm(`${TIMER_LABELS[section]}-Abschnitt wirklich zurücksetzen? Antworten und Zeit werden gelöscht.`)) return;
+  if (section === 'hoeren') $('#hearingAudio')?.pause();
+  const paperAnswers = state.checked[state.paper];
+  if (paperAnswers) {
+    delete paperAnswers[section];
+    delete paperAnswers[`${section}_submitted`];
+    delete paperAnswers[`${section}_locked`];
+    if (!Object.keys(paperAnswers).length) delete state.checked[state.paper];
+  }
+  if (section === 'schreiben') {
+    if (state.text[state.paper]) {
+      delete state.text[state.paper].schreiben;
+      if (!Object.keys(state.text[state.paper]).length) delete state.text[state.paper];
+    }
+    delete state.checks[state.paper];
+    state.writingTask = 'A';
+  }
+  if (state.timers[state.paper]) {
+    delete state.timers[state.paper][section];
+    if (!Object.keys(state.timers[state.paper]).length) delete state.timers[state.paper];
+  }
+  save();
+  renderAll();
+  showToast(`${TIMER_LABELS[section]} zurückgesetzt`);
+}
+
 function renderPaperCards() {
   const papers = Object.entries(SOURCES);
   paperGrid.innerHTML = papers.map(([id, paper], index) => `<button class="paper-card ${id === state.paper ? 'selected' : ''}" data-paper="${id}"><span class="paper-no">${String(index + 1).padStart(2, '0')}</span><strong>${esc(paper.title)}</strong><small>${esc(paper.provider)}</small><span class="paper-card-score">${esc(paperScoreLabel(id))}</span></button>`).join('');
@@ -260,6 +478,7 @@ function renderPaperCards() {
 }
 
 function renderAll() {
+  processExpiredTimers();
   const p = current();
   renderPaperCards();
   $('#paperTitle').textContent = p.title;
@@ -279,6 +498,7 @@ function renderAll() {
 }
 
 function progress(section) {
+  if (sectionLocked(state.paper, section)) return 'gesperrt';
   if (section === 'schreiben') {
     const task = writingTask();
     return task ? (draftFor(task.id).trim() ? '1/1' : '0/1') : '—';
@@ -396,7 +616,16 @@ function bindAudioPlayer() {
       audio.pause();
     }
   });
-  ['play', 'pause', 'ended'].forEach(event => audio.addEventListener(event, syncButton));
+  audio.addEventListener('play', () => {
+    if (sectionLocked(state.paper, 'hoeren')) {
+      audio.pause();
+      syncButton();
+      return;
+    }
+    startSectionTimer('hoeren');
+    syncButton();
+  });
+  ['pause', 'ended'].forEach(event => audio.addEventListener(event, syncButton));
   document.querySelectorAll('[data-audio-seek]').forEach(seekButton => seekButton.addEventListener('click', () => {
     const seconds = Number(seekButton.dataset.audioSeek);
     const duration = Number.isFinite(audio.duration) ? audio.duration : Infinity;
@@ -413,17 +642,22 @@ function renderQuestions(section) {
     return;
   }
   const answers = answersFor(section);
-  const submitted = Boolean(state.checked[state.paper]?.[`${section}_submitted`]);
-  const intro = section === 'hoeren'
-    ? 'Lies zuerst die Antwortmöglichkeiten. Danach markiere deine Lösung.'
-    : 'Wähle für jede Aufgabe genau eine Lösung.';
+  const submitted = sectionSubmitted(state.paper, section);
+  const locked = sectionLocked(state.paper, section);
+  const intro = locked
+    ? 'Zeit abgelaufen. Antworten sind gesperrt.'
+    : section === 'hoeren'
+      ? 'Lies zuerst die Antwortmöglichkeiten. Danach markiere deine Lösung.'
+      : 'Wähle für jede Aufgabe genau eine Lösung.';
   const score = submitted ? scoreSection(items, answers) : null;
   const previousAudio = section === 'hoeren' ? $('#hearingAudio') : null;
   const previousAudioPlayer = previousAudio?.closest('.audio-player');
   const preserveAudio = Boolean(previousAudioPlayer && current().audio?.url === previousAudio.getAttribute('src'));
+  const submitButton = locked ? '' : `<button class="submit-button" id="submitSection">${submitted ? 'Nochmal prüfen' : 'Abschnitt abgeben'} →</button>`;
 
-  content.innerHTML = `<div class="section-intro"><div><h3>${label}</h3><p>${intro}</p></div><button class="submit-button" id="submitSection">${submitted ? 'Nochmal prüfen' : 'Abschnitt abgeben'} →</button></div>${sourceNotice(section, !preserveAudio)}${score === null ? '' : resultBanner(score, items.length)}<div class="question-list">${items.map(item => questionHTML(item, answers, submitted, section)).join('')}</div>`;
+  content.innerHTML = `<div class="section-intro"><div><h3>${label}</h3><p>${intro}</p></div>${sectionActionsHTML(section, submitButton)}</div>${sourceNotice(section, !preserveAudio)}${score === null ? '' : resultBanner(score, items.length)}<div class="question-list">${items.map(item => questionHTML(item, answers, submitted, section, locked)).join('')}</div>`;
 
+  bindSectionControls(section);
   if (section === 'hoeren') {
     if (preserveAudio) {
       content.querySelector('.audio-player-placeholder')?.replaceWith(previousAudioPlayer);
@@ -433,6 +667,7 @@ function renderQuestions(section) {
   }
 
   content.querySelectorAll('input[type="radio"]').forEach(input => input.addEventListener('change', () => {
+    if (sectionLocked(state.paper, section)) return;
     if (!state.checked[state.paper]) state.checked[state.paper] = {};
     if (!state.checked[state.paper][section]) state.checked[state.paper][section] = {};
     state.checked[state.paper][section][input.name] = input.value;
@@ -441,23 +676,25 @@ function renderQuestions(section) {
     renderAll();
   }));
 
-  $('#submitSection').addEventListener('click', () => {
+  $('#submitSection')?.addEventListener('click', () => {
+    if (sectionLocked(state.paper, section)) return;
     if (!state.checked[state.paper]) state.checked[state.paper] = {};
     state.checked[state.paper][`${section}_submitted`] = true;
+    stopSectionTimer(section);
     save();
     renderAll();
   });
 }
 
-function questionHTML(item, answers, submitted, section) {
+function questionHTML(item, answers, submitted, section, locked = false) {
   const selected = answers[item.id] || '';
   const isWrong = submitted && selected && selected !== item.answer;
   const isCorrect = submitted && selected === item.answer;
   const correctLabel = item.options.find(option => option.value === item.answer)?.label || item.answer;
-  return `<article class="question-card ${isCorrect ? 'correct' : ''} ${isWrong ? 'wrong' : ''}">
+  return `<article class="question-card ${isCorrect ? 'correct' : ''} ${isWrong ? 'wrong' : ''} ${locked ? 'locked' : ''}">
     <div class="q-head"><span class="q-number">${item.number} / ${section === 'hoeren' ? 'HÖREN' : 'LESEN'}</span>${submitted && selected ? `<span class="q-mark">${isCorrect ? '✓' : '×'}</span>` : ''}</div>
     <p class="q-prompt">${esc(item.prompt)}</p>
-    <div class="options">${item.options.map(option => `<label class="option ${selected === option.value ? 'selected' : ''}"><input type="radio" name="${item.id}" value="${esc(option.value)}" ${selected === option.value ? 'checked' : ''}><span>${esc(option.label)}</span></label>`).join('')}</div>
+    <div class="options">${item.options.map(option => `<label class="option ${selected === option.value ? 'selected' : ''}"><input type="radio" name="${item.id}" value="${esc(option.value)}" ${selected === option.value ? 'checked' : ''} ${locked ? 'disabled' : ''}><span>${esc(option.label)}</span></label>`).join('')}</div>
     ${submitted && isWrong ? `<p class="feedback">Falsch. Richtig: <strong>${esc(correctLabel)}</strong></p>` : submitted && isCorrect ? '<p class="feedback"><strong>Richtig.</strong></p>' : ''}
   </article>`;
 }
@@ -481,22 +718,28 @@ function renderWriting() {
     content.innerHTML = '<div class="section-intro"><div><h3>Schreiben</h3><p>Für diesen Test sind keine Schreiben-Aufgaben hinterlegt.</p></div></div>';
     return;
   }
+  const locked = sectionLocked(state.paper, 'schreiben');
   const task = writingTask();
   const draft = draftFor(task.id);
   const checks = state.checks[state.paper]?.[task.id] || {};
-  content.innerHTML = `<div class="section-intro"><div><h3>Schreiben</h3><p>30 Minuten · Wähle Aufgabe A oder B und bearbeite alle vier Leitpunkte.</p></div><button class="secondary-button" id="copyWriting">Text kopieren</button></div>
-    <div class="paper-grid writing-task-grid">${tasks.map(option => `<button class="paper-card ${option.id === task.id ? 'selected' : ''}" data-writing-task="${option.id}"><span class="paper-no">${option.id}</span><strong>${esc(option.title)}</strong><small>Originalaufgabe</small></button>`).join('')}</div>
+  const writingIntro = locked ? 'Zeit abgelaufen. Dein Text ist gesperrt.' : '30 Minuten · Wähle Aufgabe A oder B und bearbeite alle vier Leitpunkte.';
+  const disabled = locked ? ' disabled' : '';
+  const copyButton = '<button type="button" class="secondary-button" id="copyWriting">Text kopieren</button>';
+  content.innerHTML = `<div class="section-intro"><div><h3>Schreiben</h3><p>${writingIntro}</p></div>${sectionActionsHTML('schreiben', copyButton)}</div>
+    <div class="paper-grid writing-task-grid">${tasks.map(option => `<button class="paper-card ${option.id === task.id ? 'selected' : ''}" data-writing-task="${option.id}"${disabled}><span class="paper-no">${option.id}</span><strong>${esc(option.title)}</strong><small>Originalaufgabe</small></button>`).join('')}</div>
     <div class="write-box"><div class="writing-situation"><h4>${esc(task.title)}</h4><p>${esc(task.prompt)}</p><ul class="points">${task.points.map(point => `<li>${esc(point)}</li>`).join('')}</ul></div>
-    <textarea id="writingText" placeholder="${esc(task.recipient)},\n\n... deine Nachricht ...\n\nMit freundlichen Grüßen\n..."></textarea>
+    <textarea id="writingText" placeholder="${esc(task.recipient)},\n\n... deine Nachricht ...\n\nMit freundlichen Grüßen\n..."${disabled}></textarea>
     <div class="write-tools"><span class="word-count" id="wordCount">0 Wörter</span><span class="muted">Tipp: Anrede + 4 Leitpunkte + Gruß</span></div>
     <div class="rubric"><h4>Selbstcheck vor dem Abgeben</h4>${[
       'Habe ich alle vier Leitpunkte beantwortet?',
       'Habe ich Anrede und Gruß geschrieben?',
       'Habe ich weil / aber / deshalb sinnvoll benutzt?',
       'Ist mein Text klar und ungefähr 40–80 Wörter lang?'
-    ].map((text, index) => `<label class="check-row"><input type="checkbox" data-check="${index}" ${checks[index] ? 'checked' : ''}> ${text}</label>`).join('')}</div></div>`;
+    ].map((text, index) => `<label class="check-row"><input type="checkbox" data-check="${index}" ${checks[index] ? 'checked' : ''}${disabled}> ${text}</label>`).join('')}</div></div>`;
 
+  bindSectionControls('schreiben');
   content.querySelectorAll('[data-writing-task]').forEach(button => button.addEventListener('click', () => {
+    if (locked) return;
     state.writingTask = button.dataset.writingTask;
     save();
     renderAll();
@@ -564,9 +807,11 @@ $('#resetProgress').addEventListener('click', () => {
   state.checked = {};
   state.text = {};
   state.checks = {};
+  state.timers = {};
   state.writingTask = 'A';
   renderAll();
-  showToast('Antworten und Ergebnis gelöscht');
+  showToast('Antworten, Zeiten und Ergebnisse gelöscht');
 });
 
+ensureTimerTicker();
 renderAll();
