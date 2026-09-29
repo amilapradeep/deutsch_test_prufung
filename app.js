@@ -251,7 +251,8 @@ function renderPaperCards() {
   $('#sourceCount').textContent = `${papers.length} Tests`;
   paperGrid.querySelectorAll('[data-paper]').forEach(button => button.addEventListener('click', () => {
     state.paper = button.dataset.paper;
-    state.section = 'lesen';
+    const selectedPaper = SOURCES[state.paper];
+    state.section = selectedPaper.lesen.length ? 'lesen' : selectedPaper.hoeren.length ? 'hoeren' : 'schreiben';
     renderAll();
     save();
     $('#workspace').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -280,7 +281,7 @@ function renderAll() {
 function progress(section) {
   if (section === 'schreiben') {
     const task = writingTask();
-    return draftFor(task.id).trim() ? '1/1' : '0/1';
+    return task ? (draftFor(task.id).trim() ? '1/1' : '0/1') : '—';
   }
   const items = current()[section] || [];
   return items.length ? `${Object.keys(answersFor(section)).length}/${items.length}` : '—';
@@ -476,6 +477,10 @@ function writingTask() {
 
 function renderWriting() {
   const tasks = current().schreiben.tasks;
+  if (!tasks.length) {
+    content.innerHTML = '<div class="section-intro"><div><h3>Schreiben</h3><p>Für diesen Test sind keine Schreiben-Aufgaben hinterlegt.</p></div></div>';
+    return;
+  }
   const task = writingTask();
   const draft = draftFor(task.id);
   const checks = state.checks[state.paper]?.[task.id] || {};

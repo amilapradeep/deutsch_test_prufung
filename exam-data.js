@@ -18,6 +18,15 @@
     ['f', 'Obst und Gemüse sind wichtig für die Gesundheit.']
   );
 
+  const hueberCity = options(
+    ['a', 'Die Mieten sind viel günstiger.'],
+    ['b', 'Es gibt ein besseres Freizeitangebot.'],
+    ['c', 'Man verliert keine Zeit bei der Parkplatzsuche.'],
+    ['d', 'Die Kinder können zu Fuß zur Schule.'],
+    ['e', 'Man kann alles ohne Auto erledigen.'],
+    ['f', 'Die Kundinnen und Kunden können schneller erreicht werden.']
+  );
+
   const aufjedenHealth = options(
     ['a', 'Die Schule muss für eine gesunde Umgebung sorgen.'],
     ['b', 'Die Schule muss gesundes Essen anbieten.'],
@@ -384,6 +393,226 @@
           { id: 'E', title: 'Hilfe beim Kindergarten-Sommerfest', prompt: 'Der Kindergarten Ihres Kindes macht ein Sommerfest und bittet alle Eltern, bei den Vorbereitungen zu helfen. Schreiben Sie an Frau Fohrer im Kindergarten.', points: ['Grund für Ihr Schreiben', 'Angebot mitzuhelfen', 'Vorschläge, was Sie machen könnten', 'Wie viel Zeit Sie haben'], recipient: 'Frau Fohrer' },
           { id: 'F', title: 'Einladung zum Ausflug', prompt: 'Sie möchten Ihren ehemaligen Kollegen und seine Frau, Familie Branic, die jetzt in eine andere Stadt gezogen sind, zu einem gemeinsamen Ausflug einladen. Schreiben Sie über die vier Leitpunkte.', points: ['Grund für Ihr Schreiben', 'Ziel', 'Wo und wann Sie sich treffen wollen', 'Was sie mitnehmen sollen'], recipient: 'Familie Branic' },
           { id: 'G', title: 'Absage Weihnachtsfeier', prompt: 'Sie sind am Freitagabend zur Weihnachtsfeier Ihrer Firma eingeladen, können aber leider nicht teilnehmen. Antworten Sie Herrn Somson mit einem kurzen Schreiben.', points: ['Grund für Ihr Schreiben', 'Dank für die Einladung', 'Warum Sie nicht kommen können', 'Weihnachtswünsche'], recipient: 'Herr Somson' }
+        ]
+      }
+    },
+
+    paper1: {
+      title: 'Paper 1 · Hören (Teile 1–4)',
+      provider: 'Lokale Unterlagen · Buchseiten 29–32',
+      tag: 'Hören-only · Lösungsschlüssel handschriftlich',
+      url: 'exam/paper_1_hoeren_buch_s29-32.md',
+      audio: {
+        url: 'audio/paper_1_hoeren_teil1-4.mp3',
+        label: 'Lokale Aufnahme · Hören Teile 1–4',
+        downloadUrl: 'audio/paper_1_hoeren_teil1-4.mp3'
+      },
+      lesen: [],
+      hoeren: [
+        mc('h1', 1, 'Was soll Frau Asali tun?', options(
+          ['a', 'Frau Reisz anrufen.'], ['b', 'Um 15 Uhr ins Jobcenter kommen.'], ['c', 'Nächste Woche anrufen.']
+        ), 'c'),
+        mc('h2', 2, 'Wann kann Herr Pinter sein Auto abholen?', options(
+          ['a', 'Am Freitag.'], ['b', 'Am Montag.'], ['c', 'Am Wochenende.']
+        ), 'b'),
+        mc('h3', 3, 'Wann ist die Praxis geschlossen?', options(
+          ['a', 'Mittwochnachmittags.'], ['b', 'Mittwochvormittags.'], ['c', 'Nachmittags ab 13 Uhr.']
+        ), 'a'),
+        mc('h4', 4, 'Was soll Herr Malinowski machen?', options(
+          ['a', 'Sein Arbeitszeugnis schicken.'], ['b', 'Bei der Firma Hirsch und Sohn anrufen.'], ['c', 'Seinen Lebenslauf schicken.']
+        ), 'a'),
+        mc('h5', 5, 'Wann regnet es nicht?', options(
+          ['a', 'Am Mittwoch.'], ['b', 'Am Donnerstag.'], ['c', 'Am Freitag.']
+        ), 'b'),
+        mc('h6', 6, 'Wo steht ein kaputtes Auto?', options(
+          ['a', 'Auf der B13.'], ['b', 'Auf der A8.'], ['c', 'Auf der A7.']
+        ), 'c'),
+        mc('h7', 7, 'Was hören Sie um 22:05 Uhr?', options(
+          ['a', 'Ein Interview.'], ['b', 'Die Nachrichten.'], ['c', 'Eine Reportage.']
+        ), 'a'),
+        mc('h8', 8, 'Wo findet die Bildungsmesse statt?', options(
+          ['a', 'Im Einstein-Gymnasium.'], ['b', 'Im Rathaus.'], ['c', 'Vor dem Rathaus.']
+        ), 'b'),
+        mc('h9', 9, 'Wie macht man bei dem Gewinnspiel mit?', options(
+          ['a', 'Man muss sich auf der Internetseite anmelden.'], ['b', 'Man schreibt eine Postkarte.'], ['c', 'Man muss beim Sender anrufen.']
+        ), 'c'),
+        tf('h10', 10, 'Herr Schulz telefoniert mit seiner Kollegin.', 'falsch'),
+        mc('h11', 11, 'Wann findet die Lieferung statt?', options(
+          ['a', 'Am Montag.'], ['b', 'Am Mittwochnachmittag.'], ['c', 'Am Freitagnachmittag.']
+        ), 'b'),
+        tf('h12', 12, 'Frau Nowak telefoniert mit dem Deutschlehrer.', 'richtig'),
+        mc('h13', 13, 'Was soll Frau Nowak tun?', options(
+          ['a', 'Ihrem Sohn bei den Hausaufgaben helfen.'], ['b', 'Einen Nachhilfelehrer suchen.'], ['c', 'Ihren Sohn mittags länger in der Schule lassen.']
+        ), 'c'),
+        tf('h14', 14, 'Emma und ihr Freund planen einen Kurzurlaub.', 'falsch'),
+        mc('h15', 15, 'Was schlägt Emmas Freund vor?', options(
+          ['a', 'Den Urlaub zu Hause zu verbringen.'], ['b', 'An die Ostsee zu fahren.'], ['c', 'Urlaub in der Natur zu machen.']
+        ), 'c'),
+        tf('h16', 16, 'Frau Barbosa bewirbt sich.', 'richtig'),
+        mc('h17', 17, 'Frau Barbosa', options(
+          ['a', 'hat Berufserfahrung.'], ['b', 'möchte nicht am Samstag arbeiten.'], ['c', 'möchte in Teilzeit arbeiten.']
+        ), 'a'),
+        mc('h18', 18, '18 ...', options(
+          ['a', 'Soziales Engagement macht die Gesellschaft stärker.'],
+          ['b', 'Während eines sozialen Jahres können Jugendliche wichtige Erfahrungen sammeln.'],
+          ['c', 'Ein soziales Pflichtjahr würde allen Jugendlichen gut tun.'],
+          ['d', 'Ein soziales Jahr könnte Probleme im Gesundheitsbereich reduzieren.'],
+          ['e', 'In einem sozialen Jahr kann man sich selbst besser kennenlernen.'],
+          ['f', 'Ein soziales Jahr sollte freiwillig sein.']
+        ), 'b'),
+        mc('h19', 19, '19 ...', options(
+          ['a', 'Soziales Engagement macht die Gesellschaft stärker.'],
+          ['b', 'Während eines sozialen Jahres können Jugendliche wichtige Erfahrungen sammeln.'],
+          ['c', 'Ein soziales Pflichtjahr würde allen Jugendlichen gut tun.'],
+          ['d', 'Ein soziales Jahr könnte Probleme im Gesundheitsbereich reduzieren.'],
+          ['e', 'In einem sozialen Jahr kann man sich selbst besser kennenlernen.'],
+          ['f', 'Ein soziales Jahr sollte freiwillig sein.']
+        ), 'd'),
+        mc('h20', 20, '20 ...', options(
+          ['a', 'Soziales Engagement macht die Gesellschaft stärker.'],
+          ['b', 'Während eines sozialen Jahres können Jugendliche wichtige Erfahrungen sammeln.'],
+          ['c', 'Ein soziales Pflichtjahr würde allen Jugendlichen gut tun.'],
+          ['d', 'Ein soziales Jahr könnte Probleme im Gesundheitsbereich reduzieren.'],
+          ['e', 'In einem sozialen Jahr kann man sich selbst besser kennenlernen.'],
+          ['f', 'Ein soziales Jahr sollte freiwillig sein.']
+        ), 'f')
+      ],
+      schreiben: { tasks: [] }
+    },
+
+    hueberModul5: {
+      title: 'Modul 5: Simulation · Hueber',
+      provider: 'Hueber · 50 Fit in DTZ B1',
+      tag: 'vollständiger Test · Sprechen nur in der PDF-Quelle',
+      url: 'exam/DTZ_Modul5_Simulation_Hueber.pdf',
+      audio: {
+        url: 'audio/50_Fit_DTZ_B1_M5_Simulation.mp3',
+        label: 'Hueber · Track 50 Hören'
+      },
+      hoeren: [
+        mc('h1', 1, 'Was soll Herr Mesic tun?', options(
+          ['a', 'Die Heizung reparieren.'], ['b', 'Herrn Wilkens um 15.00 Uhr anrufen.'], ['c', 'Am Dienstagnachmittag zu Hause bleiben.']
+        ), 'c'),
+        mc('h2', 2, 'Wo müssen die Fahrgäste nach Berlin einsteigen?', options(
+          ['a', 'An Gleis 4.'], ['b', 'An Gleis 7.'], ['c', 'An Gleis 6.']
+        ), 'a'),
+        mc('h3', 3, 'Was ist heute besonders günstig?', options(
+          ['a', 'Das Essen im Restaurant.'], ['b', 'Damenmode.'], ['c', 'Geschirr.']
+        ), 'c'),
+        mc('h4', 4, 'Welche Information bekommen die Fluggäste nach Riga?', options(
+          ['a', 'Sie können heute nicht fliegen.'], ['b', 'Sie fliegen mit 23 Minuten Verspätung.'], ['c', 'Sie müssen zum Ausgang B 23.']
+        ), 'c'),
+        mc('h5', 5, 'Wie ist das Wetter in Portugal?', options(
+          ['a', 'Sonnig und warm.'], ['b', 'Sehr heiß.'], ['c', 'Es gibt Gewitter.']
+        ), 'c'),
+        mc('h6', 6, 'Was kann man nach den Nachrichten hören?', options(
+          ['a', 'Moderne Musik.'], ['b', 'Eine Kultursendung.'], ['c', 'Klaviermusik.']
+        ), 'b'),
+        mc('h7', 7, 'Warum gibt es auf der Autobahn vor Basel Verkehrsprobleme?', options(
+          ['a', 'In Basel gibt es eine Veranstaltung.'], ['b', 'Auf der A 5 ist ein Unfall passiert.'], ['c', 'Auf der A 5 gibt es eine Baustelle.']
+        ), 'b'),
+        mc('h8', 8, 'Was kann man gewinnen?', options(
+          ['a', 'Ein Wochenende in Amsterdam.'], ['b', 'Billige Flugtickets.'], ['c', 'Eine Reise nach Paris.']
+        ), 'c'),
+        mc('h9', 9, 'Was können die Hörerinnen und Hörer machen?', options(
+          ['a', 'Beim Radio anrufen.'], ['b', 'Die Fragen von Frau Dr. Martens beantworten.'], ['c', 'Tipps zur gesunden Ernährung geben.']
+        ), 'a'),
+        tf('h10', 10, 'Der Herr befindet sich in einer Firma.', 'falsch'),
+        mc('h11', 11, 'Was möchte er wissen?', options(
+          ['a', 'Wann er den Ausweis abholen kann.'], ['b', 'Wann das Büro öffnet.'], ['c', 'Welche Papiere er braucht.']
+        ), 'c'),
+        tf('h12', 12, 'Die beiden sind nicht miteinander verwandt.', 'richtig'),
+        mc('h13', 13, 'Warum ist Frau Breuer nicht im Urlaub?', options(
+          ['a', 'Weil sie nichts gebucht hat.'], ['b', 'Weil ihr Mann arbeiten muss.'], ['c', 'Weil die Kinder keine Ferien haben.']
+        ), 'b'),
+        tf('h14', 14, 'Die Dame möchte Informationen.', 'richtig'),
+        mc('h15', 15, 'Warum kann der Herr die genauen Kosten nicht nennen?', options(
+          ['a', 'Weil er sie nicht kennt.'], ['b', 'Weil sie für jede Person unterschiedlich sind.'], ['c', 'Weil sie sich oft ändern.']
+        ), 'b'),
+        tf('h16', 16, 'Die Frau möchte eine Wohnung kaufen.', 'falsch'),
+        mc('h17', 17, 'Der Herr', options(
+          ['a', 'hat keine Angebote.'], ['b', 'hat nur zu kleine Wohnungen.'], ['c', 'hat etwas Passendes für sie.']
+        ), 'c'),
+        mc('h18', 18, '18 ...', hueberCity, 'a'),
+        mc('h19', 19, '19 ...', hueberCity, 'f'),
+        mc('h20', 20, '20 ...', hueberCity, 'c')
+      ],
+      lesen: [
+        mc('l21', 21, 'Sie möchten das Zimmer Ihrer Tochter neu streichen.', options(
+          ['a', 'ab S. 86'], ['b', 'ab S. 133'], ['c', 'andere Seite']
+        ), 'b'),
+        mc('l22', 22, 'Sie möchten eine Stehlampe kaufen.', options(
+          ['a', 'ab S. 10'], ['b', 'ab S. 133'], ['c', 'andere Seite']
+        ), 'a'),
+        mc('l23', 23, 'Sie wollen in Ihrem Garten auch Würstchen braten.', options(
+          ['a', 'ab S. 52'], ['b', 'ab S. 116'], ['c', 'andere Seite']
+        ), 'b'),
+        mc('l24', 24, 'Sie wollen für Ihren Sohn ein Baumhaus bauen; dafür brauchen Sie billiges Holz.', options(
+          ['a', 'ab S. 86'], ['b', 'ab S. 161'], ['c', 'andere Seite']
+        ), 'c'),
+        mc('l25', 25, 'Sie wollen ein Kinderbett kaufen.', options(
+          ['a', 'ab S. 10'], ['b', 'ab S. 86'], ['c', 'andere Seite']
+        ), 'b'),
+        mc('l26', 26, 'Sie arbeiten ab 11 Uhr in einem Lager und möchten sich noch etwas dazuverdienen.', matching, 'b'),
+        mc('l27', 27, 'Sie haben als Fremdsprachensekretärin gearbeitet und sprechen Litauisch, Russisch und Rumänisch.', matching, 'h'),
+        mc('l28', 28, 'Sie würden gern vormittags in einem Haushalt arbeiten.', matching, 'x'),
+        mc('l29', 29, 'Sie haben in einer Kfz-Werkstatt gearbeitet und suchen eine feste Anstellung.', matching, 'e'),
+        mc('l30', 30, 'Sie gehen noch zur Schule und suchen einen Ferienjob im Ausland.', matching, 'f'),
+        tf('l31', 31, 'Bei der Untersuchung wurde festgestellt, dass mehr Frauen als Männer arbeitslos sind.', 'falsch'),
+        mc('l32', 32, 'Berufstätige Frauen', options(
+          ['a', 'machen manchmal schneller Karriere als ihre Kollegen.'],
+          ['b', 'verdienen genauso viel wie die Männer.'],
+          ['c', 'werden nicht so gut bezahlt wie männliche Mitarbeiter.']
+        ), 'c'),
+        tf('l33', 33, 'Die Eltern sollen über einige Regeln informiert werden.', 'richtig'),
+        mc('l34', 34, 'Man bittet darum,', options(
+          ['a', 'dass die Eltern beim Sommerfest helfen.'],
+          ['b', 'dass die Kinder pünktlich abgeholt werden.'],
+          ['c', 'dass die Schuhe der Kinder immer mitgenommen werden.']
+        ), 'c'),
+        tf('l35', 35, 'Man soll eine Zeitschrift abonnieren.', 'richtig'),
+        mc('l36', 36, 'Wenn man die „Globale Welt“ nicht lesen will, muss man', options(
+          ['a', 'anrufen oder eine E-Mail schicken.'],
+          ['b', 'die beiliegende Karte abschicken.'], ['c', 'nichts tun.']
+        ), 'a'),
+        tf('l37', 37, 'Es wird erwartet, dass das Medikament schon in wenigen Tagen wirkt.', 'richtig'),
+        tf('l38', 38, 'Man darf das Medikament nicht benutzen, wenn man regelmäßig Tabletten gegen Kopfschmerzen nimmt.', 'falsch'),
+        tf('l39', 39, 'Manche Personen können nicht schlafen, wenn sie das Medikament einnehmen.', 'richtig'),
+        mc('l40', 40, 'Beschwerde ___ Materialfehler', options(
+          ['a', 'weil'], ['b', 'wegen'], ['c', 'für']
+        ), 'b'),
+        mc('l41', 41, '___ geehrte Damen und Herren,', options(
+          ['a', 'Viel'], ['b', 'Sehr'], ['c', 'Meine']
+        ), 'b'),
+        mc('l42', 42, 'am 15.03. haben Sie mir ein Sofa geliefert, ___ ich auch sofort bezahlt habe.', options(
+          ['a', 'dass'], ['b', 'den'], ['c', 'das']
+        ), 'c'),
+        mc('l43', 43, '___ habe ich erst gestern bemerkt, dass sich an der Rückseite des Sofas schwere Materialfehler befinden.', options(
+          ['a', 'Vielleicht'], ['b', 'Leider'], ['c', 'Schade']
+        ), 'b'),
+        mc('l44', 44, '___ erwarte ich, dass ich das gleiche Modell in der gleichen Farbe bekomme.', options(
+          ['a', 'Selbstverständlich'], ['b', 'Endlich'], ['c', 'Vorher']
+        ), 'a'),
+        mc('l45', 45, 'Mit freundlichen ___', options(
+          ['a', 'Grüße'], ['b', 'Gruß'], ['c', 'Grüßen']
+        ), 'c')
+      ],
+      schreiben: {
+        tasks: [
+          {
+            id: 'A',
+            title: 'Aufgabe A',
+            prompt: 'Sie haben im Supermarkt eine Anzeige von Frau Müller-Seipp für den privaten Verkauf von gebrauchten Möbeln gelesen. Sie sind daran interessiert. Deshalb schreiben Sie an Frau Müller-Seipp.',
+            points: ['Grund für das Schreiben', 'An welchen Möbeln Sie interessiert sind', 'Wie viel Sie ausgeben möchten', 'Wie Sie die Möbel abholen können'],
+            recipient: 'Frau Müller-Seipp'
+          },
+          {
+            id: 'B',
+            title: 'Aufgabe B',
+            prompt: 'Sie sind zu einer Elternversammlung an der Schule Ihres Kindes eingeladen. Leider haben Sie zum gleichen Termin einen dringenden Zahnarzttermin. Deshalb schreiben Sie an den Klassenlehrer Herrn Berberich.',
+            points: ['Grund für das Schreiben', 'Warum Sie nicht kommen können', 'Sie fragen nach den Themen des Elternabends', 'Sie bitten um einen Gesprächstermin'],
+            recipient: 'Herr Berberich'
+          }
         ]
       }
     }
