@@ -47,6 +47,10 @@ const TIMER_DURATIONS = {
 const TIMER_LABELS = { lesen: 'Lesen', hoeren: 'Hören', schreiben: 'Schreiben' };
 let timerTicker = null;
 
+function durationFor(paperId, section) {
+  return Number(SOURCES[paperId]?.timerDurations?.[section]) || TIMER_DURATIONS[section] || 0;
+}
+
 const SOURCES = {
   gast1: {
     title: 'Übungssatz 1',
@@ -285,7 +289,7 @@ function formatTimer(seconds) {
 
 function timerRemaining(paperId, section) {
   const timer = timerFor(paperId, section);
-  if (!timer?.startedAt) return TIMER_DURATIONS[section] || 0;
+  if (!timer?.startedAt) return durationFor(paperId, section);
   if (timer.expired) return 0;
   return Math.max(0, Math.ceil((Number(timer.endsAt) - Date.now()) / 1000));
 }
@@ -295,7 +299,7 @@ function timerRunning(timer) {
 }
 
 function hasRunningTimers() {
-  return Object.values(state.timers || {}).some(paperTimers => Object.entries(paperTimers || {}).some(([section, timer]) => TIMER_DURATIONS[section] && timerRunning(timer)));
+  return Object.entries(state.timers || {}).some(([paperId, paperTimers]) => Object.entries(paperTimers || {}).some(([section, timer]) => durationFor(paperId, section) && timerRunning(timer)));
 }
 
 function ensureTimerTicker() {
@@ -333,7 +337,7 @@ function processExpiredTimers() {
   let currentChanged = false;
   Object.entries(state.timers || {}).forEach(([paperId, paperTimers]) => {
     Object.entries(paperTimers || {}).forEach(([section, timer]) => {
-      if (!TIMER_DURATIONS[section] || !timer?.startedAt || timer.stopped || timer.expired) return;
+      if (!durationFor(paperId, section) || !timer?.startedAt || timer.stopped || timer.expired) return;
       if (Number(timer.endsAt) <= now && expireTimer(paperId, section)) {
         changed = true;
         currentChanged = currentChanged || (paperId === state.paper && section === state.section);
@@ -345,7 +349,8 @@ function processExpiredTimers() {
 }
 
 function startSectionTimer(section) {
-  if (!TIMER_DURATIONS[section] || !sectionHasContent(state.paper, section)) return;
+  const duration = durationFor(state.paper, section);
+  if (!duration || !sectionHasContent(state.paper, section)) return;
   processExpiredTimers();
   if (sectionSubmitted() || sectionLocked()) {
     renderAll();
@@ -357,7 +362,7 @@ function startSectionTimer(section) {
   if (!state.timers[state.paper]) state.timers[state.paper] = {};
   state.timers[state.paper][section] = {
     startedAt: now,
-    endsAt: now + TIMER_DURATIONS[section] * 1000
+    endsAt: now + duration * 1000
   };
   save();
   ensureTimerTicker();
@@ -546,7 +551,9 @@ function paperScoreLabel(paperId) {
   if (!result.submittedSections.length) return 'Noch kein Ergebnis';
   if (result.complete) {
     const hasListening = result.sections.some(section => section.section === 'hoeren');
-    return `${result.score}/${result.total} Punkte · ${hasListening ? benchmarkLabel(result.score) : 'nur Lesen'}`;
+    const hasReading = result.sections.some(section => section.section === 'lesen');
+    const label = hasListening && hasReading ? benchmarkLabel(result.score) : hasListening ? 'nur Hören' : 'nur Lesen';
+    return `${result.score}/${result.total} Punkte · ${label}`;
   }
   return result.submittedSections.map(section => `${SECTION_LABELS[section.section]} ${section.score}/${section.total}`).join(' · ');
 }
@@ -561,8 +568,9 @@ function paperScoreHTML(paperId) {
     return `<strong>${esc(details)}</strong> · Zweiter Abschnitt noch offen.`;
   }
   const hasListening = result.sections.some(section => section.section === 'hoeren');
-  const benchmark = hasListening ? ` · ${benchmarkLabel(result.score)}` : ' · nur Lesen';
-  const objectiveLabel = hasListening ? 'Hören + Lesen' : 'Hören nicht hinterlegt';
+  const hasReading = result.sections.some(section => section.section === 'lesen');
+  const benchmark = hasListening && hasReading ? ` · ${benchmarkLabel(result.score)}` : '';
+  const objectiveLabel = hasListening && hasReading ? 'Hören + Lesen' : hasListening ? 'nur Hören' : 'nur Lesen';
   return `<strong>${result.score} / ${result.total} Punkte${benchmark}</strong> <span>${objectiveLabel} · Schreiben separat bewertet</span><br><small>${esc(details)}</small>`;
 }
 

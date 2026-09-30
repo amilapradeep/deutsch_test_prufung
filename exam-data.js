@@ -690,6 +690,189 @@
           }
         ]
       }
+    },
+
+    sprachhausHoeren: {
+      title: 'Hörübungen Teil 1–4 · DTZ B1',
+      provider: 'Lokale Unterlagen · B1.2-SprachHaus',
+      tag: 'Hörübungen · 50 Aufgaben',
+      url: 'exam/dtz_b1_hoeren_uebungen_teil1-4.pdf',
+      timerDurations: { hoeren: 35 * 60 },
+      audio: {
+        url: 'audio/dtz_b1_hoeren_uebungen_teil1-4.mp3',
+        label: 'DTZ B1 · Hören Teil 1–4 · 31:04'
+      },
+      lesen: [],
+      hoeren: [
+        // Hören Teil 1: Ansagen, Durchsagen
+        mc('sprachhaus-h01', 1, 'Teil 1 · Wann werden die Möbel geliefert?', options(
+          ['a', 'Morgen Nachmittag.'], ['b', 'Morgen um 9 Uhr.'], ['c', 'Um 14 Uhr.']
+        ), 'c'),
+        mc('sprachhaus-h02', 2, 'Teil 1 · Was ist heute besonders günstig?', options(
+          ['a', 'Obst.'], ['b', 'Gemüse.'], ['c', 'Fleisch.']
+        ), 'c'),
+        mc('sprachhaus-h03', 3, 'Teil 1 · Welche Information bekommen Sie?', options(
+          ['a', 'Der ICE ist pünktlich.'], ['b', 'Der ICE fährt von Gleis 14 ab.'], ['c', 'Der ICE kommt mit Verspätung.']
+        ), 'c'),
+        mc('sprachhaus-h04', 4, 'Teil 1 · Wann ist die Zahnarztpraxis geöffnet?', options(
+          ['a', 'Täglich.'], ['b', 'Abends für dringende Fälle.'], ['c', 'Freitags auch am Nachmittag.']
+        ), 'c'),
+        mc('sprachhaus-h05', 5, 'Teil 1 · Was müssen Sie beim Parken am Haupteingang beachten?', options(
+          ['a', 'Man darf nur 40 Minuten parken.'], ['b', 'Der Haupteingang ist geschlossen.'], ['c', 'Man muss 40 Minuten auf einen Parkplatz warten.']
+        ), 'c'),
+        mc('sprachhaus-h06', 6, 'Teil 1 · Sie möchten nach Lindau fahren.', options(
+          ['a', 'Der Zug nach Lindau wartet.'], ['b', 'Der Zug nach Lindau ist schon abgefahren.'], ['c', 'Der Zug nach Lindau fährt von Gleis 14.']
+        ), 'a'),
+        mc('sprachhaus-h07', 7, 'Teil 1 · Was soll der Fahrer des Golf machen?', options(
+          ['a', 'Er muss das Auto am Eingang parken.'], ['b', 'Er muss das Auto anders parken.'], ['c', 'Er soll das Schwimmbad verlassen.']
+        ), 'b'),
+        mc('sprachhaus-h08', 8, 'Teil 1 · Was müssen die Passagiere tun?', options(
+          ['a', 'Sie können nicht nach Istanbul fliegen.'], ['b', 'Sie sollen zum Ausgang B 17 kommen.'], ['c', 'Sie sollen zur Information kommen.']
+        ), 'b'),
+        mc('sprachhaus-h09', 9, 'Teil 1 · Sie möchten Ihr Konto aufladen. Was müssen Sie tun?', options(
+          ['a', 'Die 1 wählen.'], ['b', 'Die Taste 3 drücken.'], ['c', 'Die 2 wählen.']
+        ), 'c'),
+        mc('sprachhaus-h10', 10, 'Teil 1 · Was soll Herr Brodocz tun?', options(
+          ['a', 'Er soll die Wohnung besichtigen.'], ['b', 'Er soll Frau Petersen anrufen.'], ['c', 'Er soll warten, bis Frau Petersen wieder anruft.']
+        ), 'b'),
+        mc('sprachhaus-h11', 11, 'Teil 1 · Was soll Frau Kühlwein machen?', options(
+          ['a', 'Sie soll um 20 Uhr zum Arzt kommen.'], ['b', 'Sie soll einen Termin wählen.'], ['c', 'Sie soll um halb acht anrufen.']
+        ), 'b'),
+        mc('sprachhaus-h12', 12, 'Teil 1 · Welche Information hören die Passagiere nach München?', options(
+          ['a', 'Sie sollen zum Ausgang kommen.'], ['b', 'Sie sollen aussteigen.'], ['c', 'Sie fliegen heute nicht mehr.']
+        ), 'a'),
+
+        // Hören Teil 2: Radioinformationen
+        mc('sprachhaus-h13', 13, 'Teil 2 · Um 19 Uhr hören Sie', options(
+          ['a', 'eine Musiksendung.'], ['b', 'die Nachrichten.'], ['c', 'ein Wirtschaftsmagazin.']
+        ), 'b'),
+        mc('sprachhaus-h14', 14, 'Teil 2 · Nach den Nachrichten hören Sie', options(
+          ['a', 'eine Sendung mit dem Musiker Peter Alsbach.'], ['b', 'eine Sendung für Journalisten.'], ['c', 'eine Sendung zu einem aktuellen Thema.']
+        ), 'c'),
+        mc('sprachhaus-h15', 15, 'Teil 2 · Was für eine Sendung beginnt in kurzer Zeit?', options(
+          ['a', 'Ein Reisemagazin.'], ['b', 'Ein Italienischkurs.'], ['c', 'Eine Musiksendung.']
+        ), 'c'),
+        mc('sprachhaus-h16', 16, 'Teil 2 · Wie wird das Wetter in Norddeutschland?', options(
+          ['a', 'Es gibt viel Regen.'], ['b', 'Es bleibt trocken.'], ['c', 'Es bleibt schwach windig.']
+        ), 'a'),
+        mc('sprachhaus-h17', 17, 'Teil 2 · Wie wird das Wetter am Wochenende?', options(
+          ['a', 'Es wird überall warm.'], ['b', 'Es regnet an der Nordsee.'], ['c', 'Es wird kälter.']
+        ), 'a'),
+        mc('sprachhaus-h18', 18, 'Teil 2 · Die Autofahrer sollen', options(
+          ['a', 'die Autobahn sofort verlassen.'], ['b', 'nicht auf die Autobahn fahren.'], ['c', 'sehr vorsichtig fahren.']
+        ), 'c'),
+        mc('sprachhaus-h19', 19, 'Teil 2 · Die B 36 ist bei Karlsruhe gesperrt, weil', options(
+          ['a', 'es eine 7 Kilometer lange Baustelle gibt.'], ['b', 'ein Unfall passiert ist.'], ['c', 'es keine Umleitung gibt.']
+        ), 'b'),
+        mc('sprachhaus-h20', 20, 'Teil 2 · Wo kann man in Frankfurt parken?', options(
+          ['a', 'Auf öffentlichen Parkplätzen.'], ['b', 'Im Stadtzentrum.'], ['c', 'Am Stadtrand.']
+        ), 'c'),
+        mc('sprachhaus-h21', 21, 'Teil 2 · Wo kann man die Karten gewinnen?', options(
+          ['a', 'Im Internet.'], ['b', 'Beim Radio.'], ['c', 'Im Stadion.']
+        ), 'b'),
+        mc('sprachhaus-h22', 22, 'Teil 2 · Frau Hagen soll', options(
+          ['a', 'nach Darmstadt fahren.'], ['b', 'ihren Bruder anrufen.'], ['c', 'in Dortmund anrufen.']
+        ), 'b'),
+        mc('sprachhaus-h23', 23, 'Teil 2 · Wie kann man gewinnen?', options(
+          ['a', 'Man muss sofort beim Radio anrufen und antworten.'], ['b', 'Man muss im Internet mitspielen.'], ['c', 'Man muss am Wochenende beim Radio anrufen.']
+        ), 'b'),
+        mc('sprachhaus-h24', 24, 'Teil 2 · Was muss man beachten?', options(
+          ['a', 'Man kann heute über keine Rheinbrücke fahren.'], ['b', 'Man kann nur mit der Straßenbahn über den Rhein fahren.'], ['c', 'Man muss mit Verkehrsbehinderungen nach Ludwigshafen rechnen.']
+        ), 'c'),
+
+        // Hören Teil 3: Gespräche
+        tf('sprachhaus-h25', 25, 'Teil 3 · Sie hören ein Gespräch in einer Firma.', 'richtig'),
+        mc('sprachhaus-h26', 26, 'Teil 3 · Was sagt der Mann?', options(
+          ['a', 'Er stellt die Themen der Besprechung vor.'], ['b', 'Er erzählt von der Arbeit im Verkaufsbüro.'], ['c', 'Er kann an Weihnachten nicht arbeiten.']
+        ), 'a'),
+        tf('sprachhaus-h27', 27, 'Teil 3 · Der Mann möchte eine Geschäftsreise buchen.', 'falsch'),
+        mc('sprachhaus-h28', 28, 'Teil 3 · Was ist für ihn wichtig?', options(
+          ['a', 'Das Sportangebot.'], ['b', 'Der Abflughafen.'], ['c', 'Der Preis.']
+        ), 'b'),
+        tf('sprachhaus-h29', 29, 'Teil 3 · Sie hören ein Telefongespräch zwischen Arbeitskollegen.', 'richtig'),
+        mc('sprachhaus-h30', 30, 'Teil 3 · Worüber sprechen sie?', options(
+          ['a', 'Ralf hat Probleme mit seinem Auto.'], ['b', 'Ralf möchte Christina im Auto mitnehmen.'], ['c', 'Christina möchte Ralf nicht mitnehmen.']
+        ), 'a'),
+        tf('sprachhaus-h31', 31, 'Teil 3 · Die beiden reden über ein Fußballspiel.', 'falsch'),
+        mc('sprachhaus-h32', 32, 'Teil 3 · Was möchte der Herr?', options(
+          ['a', 'Fußball spielen.'], ['b', 'Seinen Sohn anmelden.'], ['c', 'Vereinsmitglied werden.']
+        ), 'b'),
+        tf('sprachhaus-h33', 33, 'Teil 3 · Die beiden haben Probleme mit den Kollegen.', 'falsch'),
+        mc('sprachhaus-h34', 34, 'Teil 3 · Was möchten die beiden tun?', options(
+          ['a', 'Eine Feier für einen Kollegen organisieren.'], ['b', 'Ihren Geburtstag im Büro feiern.'], ['c', 'Zusammen einkaufen.']
+        ), 'a'),
+        tf('sprachhaus-h35', 35, 'Teil 3 · Sie hören ein Gespräch zwischen einem Paar.', 'richtig'),
+        mc('sprachhaus-h36', 36, 'Teil 3 · Worum geht es?', options(
+          ['a', 'Der Mann hat Probleme mit dem Mathelehrer.'], ['b', 'Der Mann möchte nicht in die Schule.'], ['c', 'Die Frau möchte, dass der Mann mit dem Lehrer spricht.']
+        ), 'c'),
+        tf('sprachhaus-h37', 37, 'Teil 3 · Der Mann möchte seine Wohnung vermieten.', 'falsch'),
+        mc('sprachhaus-h38', 38, 'Teil 3 · Was fragt die Frau?', options(
+          ['a', 'Ob die Wohnung günstig ist.'], ['b', 'Ob der Herr im Büro ist.'], ['c', 'Ob der Herr ins Büro kommen kann.']
+        ), 'c'),
+        tf('sprachhaus-h39', 39, 'Teil 3 · Der Mann arbeitet in einem Kindergarten.', 'falsch'),
+        mc('sprachhaus-h40', 40, 'Teil 3 · Was sucht Frau Poric?', options(
+          ['a', 'Einen Platz im Kindergarten.'], ['b', 'Einen Platz in der Schule.'], ['c', 'Eine Arbeit bei Frau Brecht.']
+        ), 'a'),
+        tf('sprachhaus-h41', 41, 'Teil 3 · Die Frau sucht eine Arbeit.', 'richtig'),
+        mc('sprachhaus-h42', 42, 'Teil 3 · Was fragt der Mann?', options(
+          ['a', 'Ob sie auch samstags arbeiten möchte.'], ['b', 'Wie viel sie verdienen möchte.'], ['c', 'Ob sie Berufserfahrung hat.']
+        ), 'c'),
+        tf('sprachhaus-h43', 43, 'Teil 3 · Der Lehrer telefoniert mit Cristian.', 'falsch'),
+        mc('sprachhaus-h44', 44, 'Teil 3 · Cristian', options(
+          ['a', 'beschäftigt sich mit Physik.'], ['b', 'hat Probleme mit seiner Mutter.'], ['c', 'hat Probleme in der Schule.']
+        ), 'c'),
+
+        // Hören Teil 4: Meinungen
+        mc('sprachhaus-h45', 45, 'Teil 4A · Aussage 1: Welcher Satz passt?', options(
+          ['a', 'Wer Fahrrad fährt, bleibt auch sportlich.'],
+          ['b', 'Die Straßenbahn ist bequem und günstig.'],
+          ['c', 'Gemeinsam fahren ist eine ideale Lösung.'],
+          ['d', 'Wer mit öffentlichen Verkehrsmitteln fährt, schützt die Umwelt.'],
+          ['e', 'Wer viele Kinder hat, nimmt gern das Auto.'],
+          ['f', 'Wer beruflich viel fahren muss, kann auf das Auto nicht verzichten.']
+        ), 'b'),
+        mc('sprachhaus-h46', 46, 'Teil 4A · Aussage 2: Welcher Satz passt?', options(
+          ['a', 'Wer Fahrrad fährt, bleibt auch sportlich.'],
+          ['b', 'Die Straßenbahn ist bequem und günstig.'],
+          ['c', 'Gemeinsam fahren ist eine ideale Lösung.'],
+          ['d', 'Wer mit öffentlichen Verkehrsmitteln fährt, schützt die Umwelt.'],
+          ['e', 'Wer viele Kinder hat, nimmt gern das Auto.'],
+          ['f', 'Wer beruflich viel fahren muss, kann auf das Auto nicht verzichten.']
+        ), 'a'),
+        mc('sprachhaus-h47', 47, 'Teil 4A · Aussage 3: Welcher Satz passt?', options(
+          ['a', 'Wer Fahrrad fährt, bleibt auch sportlich.'],
+          ['b', 'Die Straßenbahn ist bequem und günstig.'],
+          ['c', 'Gemeinsam fahren ist eine ideale Lösung.'],
+          ['d', 'Wer mit öffentlichen Verkehrsmitteln fährt, schützt die Umwelt.'],
+          ['e', 'Wer viele Kinder hat, nimmt gern das Auto.'],
+          ['f', 'Wer beruflich viel fahren muss, kann auf das Auto nicht verzichten.']
+        ), 'f'),
+        mc('sprachhaus-h48', 48, 'Teil 4B · Aussage 1: Welcher Satz passt?', options(
+          ['a', 'Ein Handy hilft den Kindern, Verantwortung zu übernehmen.'],
+          ['b', 'In der modernen Welt brauchen auch die Kinder ein Handy.'],
+          ['c', 'Die Eltern können die Kinder jederzeit erreichen.'],
+          ['d', 'Die Kinder sollen das Telefon zu Hause benutzen, wenn sie Freunde anrufen wollen.'],
+          ['e', 'Die Kinder lernen besser, wenn sie ein Handy haben.'],
+          ['f', 'Mit einem Handy können sich die Kinder besser verabreden.']
+        ), 'c'),
+        mc('sprachhaus-h49', 49, 'Teil 4B · Aussage 2: Welcher Satz passt?', options(
+          ['a', 'Ein Handy hilft den Kindern, Verantwortung zu übernehmen.'],
+          ['b', 'In der modernen Welt brauchen auch die Kinder ein Handy.'],
+          ['c', 'Die Eltern können die Kinder jederzeit erreichen.'],
+          ['d', 'Die Kinder sollen das Telefon zu Hause benutzen, wenn sie Freunde anrufen wollen.'],
+          ['e', 'Die Kinder lernen besser, wenn sie ein Handy haben.'],
+          ['f', 'Mit einem Handy können sich die Kinder besser verabreden.']
+        ), 'a'),
+        mc('sprachhaus-h50', 50, 'Teil 4B · Aussage 3: Welcher Satz passt?', options(
+          ['a', 'Ein Handy hilft den Kindern, Verantwortung zu übernehmen.'],
+          ['b', 'In der modernen Welt brauchen auch die Kinder ein Handy.'],
+          ['c', 'Die Eltern können die Kinder jederzeit erreichen.'],
+          ['d', 'Die Kinder sollen das Telefon zu Hause benutzen, wenn sie Freunde anrufen wollen.'],
+          ['e', 'Die Kinder lernen besser, wenn sie ein Handy haben.'],
+          ['f', 'Mit einem Handy können sich die Kinder besser verabreden.']
+        ), 'd')
+      ],
+      schreiben: { tasks: [] }
     }
   };
 })();
