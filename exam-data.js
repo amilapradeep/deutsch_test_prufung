@@ -398,16 +398,74 @@
     },
 
     paper1: {
-      title: 'Paper 1 · Hören (Teile 1–4)',
+      title: 'Paper 1 · Hören, Lesen & Schreiben',
       provider: 'Lokale Unterlagen · Buchseiten 29–32',
-      tag: 'Hören-only · Lösungsschlüssel handschriftlich',
+      tag: 'vollständiger Test · Lösungsschlüssel handschriftlich',
       url: 'exam/paper_1_hoeren_buch_s29-32.md',
       audio: {
         url: 'audio/paper_1_hoeren_teil1-4.mp3',
         label: 'Lokale Aufnahme · Hören Teile 1–4',
         downloadUrl: 'audio/paper_1_hoeren_teil1-4.mp3'
       },
-      lesen: [],
+      lesen: [
+        mc('l21', 21, 'Sie haben Ihr Smartphone verloren.', options(
+          ['a', '210'], ['b', '14'], ['c', 'anderes Zimmer']
+        ), 'b'),
+        mc('l22', 22, 'Sie heiraten heute.', options(
+          ['a', '12'], ['b', '101'], ['c', 'anderes Zimmer']
+        ), 'c'),
+        mc('l23', 23, 'Ihr Sofa ist sehr alt und Sie möchten es wegwerfen.', options(
+          ['a', '14'], ['b', '312'], ['c', 'anderes Zimmer']
+        ), 'b'),
+        mc('l24', 24, 'Sie möchten Deutsche*r werden.', options(
+          ['a', '12'], ['b', '102'], ['c', 'anderes Zimmer']
+        ), 'a'),
+        mc('l25', 25, 'Sie sind umgezogen.', options(
+          ['a', '102'], ['b', '310'], ['c', 'anderes Zimmer']
+        ), 'a'),
+        mc('l26', 26, 'Sie suchen ein Hotel, in dem Sie Kund*innen Ihre Produkte präsentieren können.', matching, 'h'),
+        mc('l27', 27, 'Sie möchten Ihren Hochzeitstag in einem ruhigen Hotel in schöner Landschaft feiern.', matching, 'b'),
+        mc('l28', 28, 'Sie möchten in den Bergen Urlaub machen und suchen eine Unterkunft, in der Sie auch kochen können.', matching, 'f'),
+        mc('l29', 29, 'Sie suchen ein Sporthotel, wo Sie Tennis und Golf spielen können.', matching, 'x'),
+        mc('l30', 30, 'Sie suchen mitten in München eine preiswerte Unterkunft.', matching, 'e'),
+        tf('l31', 31, 'Das Fest findet nur bei schönem Wetter statt.', 'falsch'),
+        mc('l32', 32, 'Wenn man zum Fest kommt, soll man …', options(
+          ['a', 'Essen und Getränke mitbringen.'], ['b', 'Tische mitbringen.']
+        ), 'a'),
+        tf('l33', 33, 'Frau Michler will bei der Baugenossenschaft eine Wohnung mieten.', 'falsch'),
+        mc('l34', 34, 'Die Baugenossenschaft möchte, dass Frau Michler …', options(
+          ['a', 'die Wohnung besichtigt.'],
+          ['b', 'mit dem Hausmeister einen Termin ausmacht.'],
+          ['c', 'den Mietvertrag zurückgibt.']
+        ), 'b'),
+        tf('l35', 35, 'Der Check-up ist für weibliche und männliche Patienten.', 'richtig'),
+        mc('l36', 36, 'Der Check-up 35 …', options(
+          ['a', 'kostet nichts.'],
+          ['b', 'ist für kranke Menschen.'],
+          ['c', 'ist für alle 35-Jährigen Pflicht.']
+        ), 'a'),
+        tf('l37', 37, 'Wer arbeitslos ist, muss ins BiZ kommen.', 'falsch'),
+        tf('l38', 38, 'Die Mitarbeiter*innen im BiZ helfen bei Bewerbungsfragen.', 'richtig'),
+        tf('l39', 39, 'Ausländische Mitbürger*innen sollen bestimmte Dokumente mitbringen.', 'richtig'),
+        mc('l40', 40, 'Ich interessiere ____ sehr für die 1-Zimmer-Wohnung.', options(
+          ['a', 'mich'], ['b', 'sich'], ['c', 'dich']
+        ), 'a'),
+        mc('l41', 41, 'Ich wohne aktuell noch ____ meinen Eltern.', options(
+          ['a', 'ohne'], ['b', 'zu'], ['c', 'bei']
+        ), 'c'),
+        mc('l42', 42, 'Ich ____ seit einem halben Jahr als Tischlerin beschäftigt.', options(
+          ['a', 'habe'], ['b', 'bin'], ['c', 'werde']
+        ), 'b'),
+        mc('l43', 43, 'Eine Kopie meines Arbeitsvertrags ____ ich Ihnen gerne schicken.', options(
+          ['a', 'kann'], ['b', 'muss'], ['c', 'soll']
+        ), 'a'),
+        mc('l44', 44, 'Ich ____ mich sehr über einen Besichtigungstermin freuen.', options(
+          ['a', 'hätte'], ['b', 'würde'], ['c', 'wäre']
+        ), 'b'),
+        mc('l45', 45, 'Sie können mich telefonisch ____ meiner Mobilnummer erreichen.', options(
+          ['a', 'durch'], ['b', 'auf'], ['c', 'unter']
+        ), 'c')
+      ],
       hoeren: [
         mc('h1', 1, 'Was soll Frau Asali tun?', options(
           ['a', 'Frau Reisz anrufen.'], ['b', 'Um 15 Uhr ins Jobcenter kommen.'], ['c', 'Nächste Woche anrufen.']
@@ -477,7 +535,24 @@
           ['f', 'Ein soziales Jahr sollte freiwillig sein.']
         ), 'f')
       ],
-      schreiben: { tasks: [] }
+      schreiben: {
+        tasks: [
+          {
+            id: 'A',
+            title: 'Aufgabe A',
+            prompt: 'Ihr Bekannter, Herr Max Litwicki, fährt diesen Samstag in den Urlaub. Er hat Ihnen eine E-Mail geschrieben. Er möchte, dass Sie sich um seinen Garten kümmern. Schreiben Sie ihm eine E-Mail zurück.',
+            points: ['Hilfe zusagen', 'Ihre Aufgaben', 'Werkzeug', 'Wie oft?'],
+            recipient: 'Herr Max Litwicki'
+          },
+          {
+            id: 'B',
+            title: 'Aufgabe B',
+            prompt: 'In Ihrer Wohnung schließen die Fenster nicht richtig. Deshalb ist es kalt in der Wohnung. Sie haben Ihren Vermieter, Herrn Schneider, schon angerufen. Aber nichts ist seitdem passiert. Schreiben Sie an Herrn Schneider.',
+            points: ['Grund für Ihr Schreiben', 'Warum eine kalte Wohnung schlecht ist', 'Was Sie wollen', 'Was Sie tun, wenn nichts passiert'],
+            recipient: 'Herr Schneider'
+          }
+        ]
+      }
     },
 
     hueberModul5: {
