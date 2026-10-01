@@ -663,7 +663,16 @@ function renderQuestions(section) {
   const preserveAudio = Boolean(previousAudioPlayer && current().audio?.url === previousAudio.getAttribute('src'));
   const submitButton = locked ? '' : `<button class="submit-button" id="submitSection">${submitted ? 'Nochmal prüfen' : 'Abschnitt abgeben'} →</button>`;
 
-  content.innerHTML = `<div class="section-intro"><div><h3>${label}</h3><p>${intro}</p></div>${sectionActionsHTML(section, submitButton)}</div>${sourceNotice(section, !preserveAudio)}${score === null ? '' : resultBanner(score, items.length)}<div class="question-list">${items.map(item => questionHTML(item, answers, submitted, section, locked)).join('')}</div>`;
+  const questionGroups = current().questionGroups?.[section] || [];
+  let activeQuestionGroup = null;
+  const questionMarkup = items.map((item, index) => {
+    const group = questionGroups.find(candidate => candidate.start === index);
+    if (group) activeQuestionGroup = group;
+    const groupHeading = group ? `<h4 class="question-group-heading">${esc(group.label)}</h4>` : '';
+    const number = activeQuestionGroup ? index - activeQuestionGroup.start + 1 : item.number;
+    return `${groupHeading}${questionHTML(item, answers, submitted, section, locked, number)}`;
+  }).join('');
+  content.innerHTML = `<div class="section-intro"><div><h3>${label}</h3><p>${intro}</p></div>${sectionActionsHTML(section, submitButton)}</div>${sourceNotice(section, !preserveAudio)}${score === null ? '' : resultBanner(score, items.length)}<div class="question-list">${questionMarkup}</div>`;
 
   bindSectionControls(section);
   if (section === 'hoeren') {
@@ -694,13 +703,13 @@ function renderQuestions(section) {
   });
 }
 
-function questionHTML(item, answers, submitted, section, locked = false) {
+function questionHTML(item, answers, submitted, section, locked = false, number = item.number) {
   const selected = answers[item.id] || '';
   const isWrong = submitted && selected && selected !== item.answer;
   const isCorrect = submitted && selected === item.answer;
   const correctLabel = item.options.find(option => option.value === item.answer)?.label || item.answer;
   return `<article class="question-card ${isCorrect ? 'correct' : ''} ${isWrong ? 'wrong' : ''} ${locked ? 'locked' : ''}">
-    <div class="q-head"><span class="q-number">${item.number} / ${section === 'hoeren' ? 'HÖREN' : 'LESEN'}</span>${submitted && selected ? `<span class="q-mark">${isCorrect ? '✓' : '×'}</span>` : ''}</div>
+    <div class="q-head"><span class="q-number">${number} / ${section === 'hoeren' ? 'HÖREN' : 'LESEN'}</span>${submitted && selected ? `<span class="q-mark">${isCorrect ? '✓' : '×'}</span>` : ''}</div>
     <p class="q-prompt">${esc(item.prompt)}</p>
     <div class="options">${item.options.map(option => `<label class="option ${selected === option.value ? 'selected' : ''}"><input type="radio" name="${item.id}" value="${esc(option.value)}" ${selected === option.value ? 'checked' : ''} ${locked ? 'disabled' : ''}><span>${esc(option.label)}</span></label>`).join('')}</div>
     ${submitted && isWrong ? `<p class="feedback">Falsch. Richtig: <strong>${esc(correctLabel)}</strong></p>` : submitted && isCorrect ? '<p class="feedback"><strong>Richtig.</strong></p>' : ''}

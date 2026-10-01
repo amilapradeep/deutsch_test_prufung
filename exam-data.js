@@ -698,6 +698,15 @@
       tag: 'Hörübungen · 50 Aufgaben',
       url: 'exam/dtz_b1_hoeren_uebungen_teil1-4.pdf',
       timerDurations: { hoeren: 35 * 60 },
+      questionGroups: {
+        hoeren: [
+          { start: 0, label: 'Teil 1' },
+          { start: 12, label: 'Teil 2' },
+          { start: 24, label: 'Teil 3' },
+          { start: 44, label: 'Teil 4A · Thema 1' },
+          { start: 47, label: 'Teil 4B · Thema 2' }
+        ]
+      },
       audio: {
         url: 'audio/dtz_b1_hoeren_uebungen_teil1-4.mp3',
         label: 'DTZ B1 · Hören Teil 1–4 · 31:04'
@@ -707,7 +716,7 @@
         // Hören Teil 1: Ansagen, Durchsagen
         mc('sprachhaus-h01', 1, 'Teil 1 · Wann werden die Möbel geliefert?', options(
           ['a', 'Morgen Nachmittag.'], ['b', 'Morgen um 9 Uhr.'], ['c', 'Um 14 Uhr.']
-        ), 'c'),
+        ), 'a'),
         mc('sprachhaus-h02', 2, 'Teil 1 · Was ist heute besonders günstig?', options(
           ['a', 'Obst.'], ['b', 'Gemüse.'], ['c', 'Fleisch.']
         ), 'c'),
