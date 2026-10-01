@@ -401,7 +401,7 @@
       title: 'Paper 1 · Hören, Lesen & Schreiben',
       provider: 'Lokale Unterlagen · Buchseiten 29–32',
       tag: 'vollständiger Test · Lösungsschlüssel handschriftlich',
-      url: 'exam/paper_1_hoeren_buch_s29-32.md',
+      url: 'exam/paper_1_hoeren_buch_s29-32.pdf',
       audio: {
         url: 'audio/paper_1_hoeren_teil1-4.mp3',
         label: 'Lokale Aufnahme · Hören Teile 1–4',
