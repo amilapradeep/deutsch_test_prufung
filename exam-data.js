@@ -309,7 +309,7 @@
         mc('l40', 40, '___ Damen und Herren,', options(['a', 'Sehr geehrte'], ['b', 'Sehr geehrten'], ['c', 'Viel geehrte']), 'a'),
         mc('l41', 41, 'Die zwei Wochen Probelesen Ihrer Tageszeitung enden für ___ am 17.5.2008.', options(['a', 'mein'], ['b', 'mich'], ['c', 'mir']), 'b'),
         mc('l42', 42, 'Hiermit ___ ich mein Probeabonnement fristgerecht kündigen.', options(['a', 'kann'], ['b', 'möchte'], ['c', 'soll']), 'b'),
-        mc('l43', 43, 'Leider ___ ich feststellen, dass ich nicht genug Zeit für regelmäßiges Zeitunglesen habe.', options(['a', 'konnte'], ['b', 'musste'], ['c', 'sollte']), 'a'),
+        mc('l43', 43, 'Leider ___ ich feststellen, dass ich nicht genug Zeit für regelmäßiges Zeitunglesen habe.', options(['a', 'konnte'], ['b', 'musste'], ['c', 'sollte']), 'b'),
         mc('l44', 44, '___ möchte ich die Norddeutsche Zeitung nicht weiter abonnieren.', options(['a', 'Denn'], ['b', 'Deshalb'], ['c', 'Weil']), 'b'),
         mc('l45', 45, 'Mit ___ Grüßen,', options(['a', 'freundlichen'], ['b', 'lieben'], ['c', 'vielen']), 'a')
       ],
