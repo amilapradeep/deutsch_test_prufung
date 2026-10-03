@@ -273,11 +273,11 @@ function sectionHasContent(paperId, section) {
 }
 
 function sectionSubmitted(paperId = state.paper, section) {
-  return Boolean(state.checked[paperId]?.[`${section}_submitted`]);
+  return section !== 'schreiben' && Boolean(state.checked[paperId]?.[`${section}_submitted`]);
 }
 
 function sectionLocked(paperId = state.paper, section) {
-  return Boolean(state.checked[paperId]?.[`${section}_locked`]);
+  return section !== 'schreiben' && Boolean(state.checked[paperId]?.[`${section}_locked`]);
 }
 
 function formatTimer(seconds) {
@@ -321,12 +321,16 @@ function expireTimer(paperId, section) {
   timer.expired = true;
   timer.stopped = true;
   timer.endsAt = Date.now();
-  if (!state.checked[paperId]) state.checked[paperId] = {};
-  state.checked[paperId][`${section}_submitted`] = true;
-  state.checked[paperId][`${section}_locked`] = true;
+  if (section !== 'schreiben') {
+    if (!state.checked[paperId]) state.checked[paperId] = {};
+    state.checked[paperId][`${section}_submitted`] = true;
+    state.checked[paperId][`${section}_locked`] = true;
+  }
   if (paperId === state.paper) {
     if (section === 'hoeren') $('#hearingAudio')?.pause();
-    showToast(`${TIMER_LABELS[section]}: Zeit abgelaufen · Antworten abgegeben`);
+    showToast(section === 'schreiben'
+      ? 'Schreiben: Zeit abgelaufen · du kannst weiter schreiben'
+      : `${TIMER_LABELS[section]}: Zeit abgelaufen · Antworten abgegeben`);
   }
   return true;
 }
@@ -386,7 +390,7 @@ function timerInfo(section, paperId = state.paper) {
   let status = 'Bereit';
   let className = 'ready';
   if (locked || timer?.expired) {
-    status = 'Gesperrt · Zeit abgelaufen';
+    status = section === 'schreiben' ? 'Zeit abgelaufen · weiter schreiben' : 'Gesperrt · Zeit abgelaufen';
     className = 'expired';
   } else if (running) {
     status = 'Läuft';
@@ -417,15 +421,20 @@ function timerHTML(section) {
   const startButton = info.canStart
     ? `<button type="button" class="timer-start" data-start-timer="${section}">Timer starten</button>`
     : '';
-  return `<div class="section-timer ${info.className}" data-section-timer="${section}"><span class="timer-label">${TIMER_LABELS[section]}</span><strong data-timer-value>${formatTimer(info.seconds)}</strong><span class="timer-status" data-timer-status>${info.status}</span>${startButton}</div>`;
+  const restartButton = section === 'schreiben' && (info.timer?.expired || info.timer?.stopped)
+    ? '<button type="button" class="timer-start" data-restart-writing-timer>Timer neu starten</button>'
+    : '';
+  return `<div class="section-timer ${info.className}" data-section-timer="${section}"><span class="timer-label">${TIMER_LABELS[section]}</span><strong data-timer-value>${formatTimer(info.seconds)}</strong><span class="timer-status" data-timer-status>${info.status}</span>${startButton}${restartButton}</div>`;
 }
 
 function sectionActionsHTML(section, extra = '') {
-  return `<div class="section-actions">${timerHTML(section)}${extra}<button type="button" class="secondary-button section-reset" data-reset-section="${section}">Abschnitt zurücksetzen</button></div>`;
+  const resetLabel = section === 'schreiben' ? 'Alle Schreibtexte löschen & zurücksetzen' : 'Abschnitt zurücksetzen';
+  return `<div class="section-actions">${timerHTML(section)}${extra}<button type="button" class="secondary-button section-reset" data-reset-section="${section}">${resetLabel}</button></div>`;
 }
 
 function bindSectionControls(section) {
   content.querySelector(`[data-start-timer="${section}"]`)?.addEventListener('click', () => startSectionTimer(section));
+  content.querySelector('[data-restart-writing-timer]')?.addEventListener('click', restartWritingTimer);
   content.querySelector(`[data-reset-section="${section}"]`)?.addEventListener('click', () => resetSection(section));
 }
 
@@ -440,9 +449,23 @@ function updateTimerDisplay() {
   if (timer) timer.className = `section-timer ${info.className}`;
 }
 
+function restartWritingTimer() {
+  const timer = timerFor(state.paper, 'schreiben');
+  if (!timer || timerRunning(timer) || !sectionHasContent(state.paper, 'schreiben')) return;
+  delete state.timers[state.paper].schreiben;
+  if (!Object.keys(state.timers[state.paper]).length) delete state.timers[state.paper];
+  // Clear flags saved by older versions; drafts and self-checks remain untouched.
+  delete state.checked[state.paper]?.schreiben_submitted;
+  delete state.checked[state.paper]?.schreiben_locked;
+  startSectionTimer('schreiben');
+}
+
 function resetSection(section) {
   if (!sectionHasContent(state.paper, section)) return;
-  if (!confirm(`${TIMER_LABELS[section]}-Abschnitt wirklich zurücksetzen? Antworten und Zeit werden gelöscht.`)) return;
+  const warning = section === 'schreiben'
+    ? 'Alle Schreibtexte und Selbstchecks dieses Tests sowie die Schreibzeit endgültig löschen?'
+    : `${TIMER_LABELS[section]}-Abschnitt wirklich zurücksetzen? Antworten und Zeit werden gelöscht.`;
+  if (!confirm(warning)) return;
   if (section === 'hoeren') $('#hearingAudio')?.pause();
   const paperAnswers = state.checked[state.paper];
   if (paperAnswers) {
@@ -735,28 +758,25 @@ function renderWriting() {
     content.innerHTML = '<div class="section-intro"><div><h3>Schreiben</h3><p>Für diesen Test sind keine Schreiben-Aufgaben hinterlegt.</p></div></div>';
     return;
   }
-  const locked = sectionLocked(state.paper, 'schreiben');
   const task = writingTask();
   const draft = draftFor(task.id);
   const checks = state.checks[state.paper]?.[task.id] || {};
-  const writingIntro = locked ? 'Zeit abgelaufen. Dein Text ist gesperrt.' : '30 Minuten · Wähle Aufgabe A oder B und bearbeite alle vier Leitpunkte.';
-  const disabled = locked ? ' disabled' : '';
+  const writingIntro = 'Wähle eine Schreibaufgabe. Der Timer erinnert dich an die Zeit, sperrt aber keine Texte.';
   const copyButton = '<button type="button" class="secondary-button" id="copyWriting">Text kopieren</button>';
   content.innerHTML = `<div class="section-intro"><div><h3>Schreiben</h3><p>${writingIntro}</p></div>${sectionActionsHTML('schreiben', copyButton)}</div>
-    <div class="paper-grid writing-task-grid">${tasks.map(option => `<button class="paper-card ${option.id === task.id ? 'selected' : ''}" data-writing-task="${option.id}"${disabled}><span class="paper-no">${option.id}</span><strong>${esc(option.title)}</strong><small>Originalaufgabe</small></button>`).join('')}</div>
+    <div class="paper-grid writing-task-grid">${tasks.map(option => `<button class="paper-card ${option.id === task.id ? 'selected' : ''}" data-writing-task="${option.id}"><span class="paper-no">${option.id}</span><strong>${esc(option.title)}</strong><small>Originalaufgabe</small></button>`).join('')}</div>
     <div class="write-box"><div class="writing-situation"><h4>${esc(task.title)}</h4><p>${esc(task.prompt)}</p><ul class="points">${task.points.map(point => `<li>${esc(point)}</li>`).join('')}</ul></div>
-    <textarea id="writingText" placeholder="${esc(task.recipient)},\n\n... deine Nachricht ...\n\nMit freundlichen Grüßen\n..."${disabled}></textarea>
+    <textarea id="writingText" placeholder="${esc(task.recipient)},\n\n... deine Nachricht ...\n\nMit freundlichen Grüßen\n..."></textarea>
     <div class="write-tools"><span class="word-count" id="wordCount">0 Wörter</span><span class="muted">Tipp: Anrede + 4 Leitpunkte + Gruß</span></div>
     <div class="rubric"><h4>Selbstcheck vor dem Abgeben</h4>${[
       'Habe ich alle vier Leitpunkte beantwortet?',
       'Habe ich Anrede und Gruß geschrieben?',
       'Habe ich weil / aber / deshalb sinnvoll benutzt?',
       'Ist mein Text klar und ungefähr 40–80 Wörter lang?'
-    ].map((text, index) => `<label class="check-row"><input type="checkbox" data-check="${index}" ${checks[index] ? 'checked' : ''}${disabled}> ${text}</label>`).join('')}</div></div>`;
+    ].map((text, index) => `<label class="check-row"><input type="checkbox" data-check="${index}" ${checks[index] ? 'checked' : ''}> ${text}</label>`).join('')}</div></div>`;
 
   bindSectionControls('schreiben');
   content.querySelectorAll('[data-writing-task]').forEach(button => button.addEventListener('click', () => {
-    if (locked) return;
     state.writingTask = button.dataset.writingTask;
     save();
     renderAll();
