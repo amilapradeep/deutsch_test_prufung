@@ -16,6 +16,7 @@ SOURCES = {
     'telc1': ('telc_Deutsch_A2-B1_Uebungstest_1.pdf', [23], [24], [25], [26]),
     'goetheModellsatz': ('dtz_goethe_modellsatz_2009.pdf', [31], [32], [33], [34]),
     'hueberModul5': ('DTZ_Modul5_Simulation_Hueber.pdf', [13], [13, 14], [15], [16]),
+    'paper1': ('Treffpunkt_B1_DTZ_Modelltest.pdf', [15], [16], [17], [17]),
 }
 PARTS = [
     ('teil1', 'Teil 1 · Über sich sprechen'),

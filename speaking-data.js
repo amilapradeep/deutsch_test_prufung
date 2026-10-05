@@ -305,5 +305,55 @@ window.ORIGINAL_SPEAKING = {
         ]
       }
     ]
+  },
+  "paper1": {
+    "original": true,
+    "sourceUrl": "exam/Treffpunkt_B1_DTZ_Modelltest.pdf",
+    "parts": [
+      {
+        "id": "teil1",
+        "title": "Teil 1 · Über sich sprechen",
+        "pages": [
+          {
+            "number": 15,
+            "image": "exam/speaking/paper1/page-15.png",
+            "text": "13\nLesen\nModelltest\nMündliche Prüfung\nSprechen\n(10 Minuten pro Teilnehmende/-n)\nSie sollen ein Gespräch mit Ihrer Partnerin / Ihrem Partner führen. Dazu bekommen Sie drei \nAufgaben.\nSprechen, Teil 1\b\nTeilnehmer/-in A und B\nStellen Sie sich bitte vor.\nName\nGeburtsort\nWohnort\nArbeit/Beruf\nFamilie\nSprachen"
+          }
+        ]
+      },
+      {
+        "id": "bildA",
+        "title": "Teil 2 · Teilnehmer/in A",
+        "pages": [
+          {
+            "number": 16,
+            "image": "exam/speaking/paper1/page-16.png",
+            "text": "14\nLesen\nMündliche Prüfung\nModelltest\nSprechen, Teil 2\b\nTeilnehmer/-in A \nTeil A\nSie haben in einer Zeitschrift ein Foto gefunden. Berichten Sie Ihrer Gesprächspartnerin / Ihrem \n­Gesprächspartner kurz:\n– Was sehen Sie auf dem Foto?\n– Was für eine Situation zeigt dieses Bild?\nTeil B\nErzählen Sie: Welche Erfahrungen haben Sie damit?"
+          }
+        ]
+      },
+      {
+        "id": "bildB",
+        "title": "Teil 2 · Teilnehmer/in B",
+        "pages": [
+          {
+            "number": 17,
+            "image": "exam/speaking/paper1/page-17.png",
+            "text": "15\nLesen\nModelltest\nMündliche Prüfung\nSprechen, Teil 2\b\nTeilnehmer/-in B\nTeil A\nSie haben in einer Zeitschrift ein Foto gefunden. Berichten Sie Ihrer Gesprächspartnerin / Ihrem \n­Gesprächspartner kurz:\n– Was sehen Sie auf dem Foto?\n– Was für eine Situation zeigt dieses Bild?\nTeil B\nErzählen Sie: Welche Erfahrungen haben Sie damit?\nSprechen, Teil 3\b\nTeilnehmer/-in A und B\nSie möchten mit Ihrer Gesprächspartnerin / Ihrem Gesprächspartner eine Wochenendreise machen \nund in den Bergen wandern. Planen Sie gemeinsam die Reise.\nPlanen Sie, was Sie tun möchten. Hier haben Sie einige Notizen:\nWohin?\nTreffpunkt?\nVerkehrsmittel?\nÜbernachtung?\nWer bucht was?"
+          }
+        ]
+      },
+      {
+        "id": "teil3",
+        "title": "Teil 3 · Gemeinsam etwas planen",
+        "pages": [
+          {
+            "number": 17,
+            "image": "exam/speaking/paper1/page-17.png",
+            "text": "15\nLesen\nModelltest\nMündliche Prüfung\nSprechen, Teil 2\b\nTeilnehmer/-in B\nTeil A\nSie haben in einer Zeitschrift ein Foto gefunden. Berichten Sie Ihrer Gesprächspartnerin / Ihrem \n­Gesprächspartner kurz:\n– Was sehen Sie auf dem Foto?\n– Was für eine Situation zeigt dieses Bild?\nTeil B\nErzählen Sie: Welche Erfahrungen haben Sie damit?\nSprechen, Teil 3\b\nTeilnehmer/-in A und B\nSie möchten mit Ihrer Gesprächspartnerin / Ihrem Gesprächspartner eine Wochenendreise machen \nund in den Bergen wandern. Planen Sie gemeinsam die Reise.\nPlanen Sie, was Sie tun möchten. Hier haben Sie einige Notizen:\nWohin?\nTreffpunkt?\nVerkehrsmittel?\nÜbernachtung?\nWer bucht was?"
+          }
+        ]
+      }
+    ]
   }
 };

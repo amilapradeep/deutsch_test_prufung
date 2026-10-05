@@ -399,9 +399,9 @@
 
     paper1: {
       title: 'Paper 1 · Hören, Lesen & Schreiben',
-      provider: 'Lokale Unterlagen · Buchseiten 29–32',
-      tag: 'vollständiger Test · Lösungsschlüssel handschriftlich',
-      url: 'exam/paper_1_hoeren_buch_s29-32.pdf',
+      provider: 'Treffpunkt B1 · Cornelsen · Modelltest 2024',
+      tag: 'Original-Lesen · 4 Schreibaufgaben + Sprechen',
+      url: 'exam/Treffpunkt_B1_DTZ_Modelltest.pdf',
       audio: {
         url: 'audio/paper_1_hoeren_teil1-4.mp3',
         label: 'Lokale Aufnahme · Hören Teile 1–4',
@@ -412,57 +412,58 @@
           ['a', '210'], ['b', '14'], ['c', 'anderes Zimmer']
         ), 'b'),
         mc('l22', 22, 'Sie heiraten heute.', options(
-          ['a', '12'], ['b', '101'], ['c', 'anderes Zimmer']
+          ['a', '12'], ['b', '102'], ['c', 'anderes Zimmer']
         ), 'c'),
         mc('l23', 23, 'Ihr Sofa ist sehr alt und Sie möchten es wegwerfen.', options(
           ['a', '14'], ['b', '312'], ['c', 'anderes Zimmer']
         ), 'b'),
-        mc('l24', 24, 'Sie möchten Deutsche*r werden.', options(
+        mc('l24', 24, 'Sie möchten in Deutschland arbeiten.', options(
           ['a', '12'], ['b', '102'], ['c', 'anderes Zimmer']
         ), 'a'),
         mc('l25', 25, 'Sie sind umgezogen.', options(
           ['a', '102'], ['b', '310'], ['c', 'anderes Zimmer']
         ), 'a'),
-        mc('l26', 26, 'Sie suchen ein Hotel, in dem Sie Kund*innen Ihre Produkte präsentieren können.', matching, 'h'),
-        mc('l27', 27, 'Sie möchten Ihren Hochzeitstag in einem ruhigen Hotel in schöner Landschaft feiern.', matching, 'b'),
-        mc('l28', 28, 'Sie möchten in den Bergen Urlaub machen und suchen eine Unterkunft, in der Sie auch kochen können.', matching, 'f'),
+        mc('l26', 26, 'Sie suchen ein Hotel, in dem Sie Kunden und Kundinnen Ihre Produkte präsentieren können.', matching, 'h'),
+        mc('l27', 27, 'Sie möchten an Ihrem Hochzeitstag in einem ruhigen Hotel mit Sauna in schöner Landschaft entspannen.', matching, 'b'),
+        mc('l28', 28, 'Sie möchten in den Bergen Urlaub machen und suchen eine Unterkunft, in der Sie auch kochen können.', matching, 'a'),
         mc('l29', 29, 'Sie suchen ein Sporthotel, wo Sie Tennis und Golf spielen können.', matching, 'x'),
-        mc('l30', 30, 'Sie suchen mitten in München eine preiswerte Unterkunft.', matching, 'e'),
+        mc('l30', 30, 'Sie wollen mit Ihrer Familie eine Städtereise machen und suchen mitten in München eine preiswerte Unterkunft.', matching, 'c'),
         tf('l31', 31, 'Das Fest findet nur bei schönem Wetter statt.', 'falsch'),
         mc('l32', 32, 'Wenn man zum Fest kommt, soll man …', options(
-          ['a', 'Essen und Getränke mitbringen.'], ['b', 'Tische mitbringen.']
-        ), 'a'),
+          ['a', 'Essen und Getränke mitbringen.'], ['b', 'Tische mitbringen.'],
+          ['c', 'Bescheid sagen, was man zum Essen mitbringt.']
+        ), 'c'),
         tf('l33', 33, 'Frau Michler will bei der Baugenossenschaft eine Wohnung mieten.', 'falsch'),
-        mc('l34', 34, 'Die Baugenossenschaft möchte, dass Frau Michler …', options(
-          ['a', 'die Wohnung besichtigt.'],
-          ['b', 'mit dem Hausmeister einen Termin ausmacht.'],
-          ['c', 'den Mietvertrag zurückgibt.']
+        mc('l34', 34, 'Die Baugenossenschaft möchte, dass …', options(
+          ['a', 'Frau Michler die Wohnung kündigt.'],
+          ['b', 'der Hausmeister die Wohnung besichtigt.'],
+          ['c', 'Frau Michler die Schlüssel sofort zurückgibt.']
         ), 'b'),
-        tf('l35', 35, 'Der Check-up ist für weibliche und männliche Patienten.', 'richtig'),
+        tf('l35', 35, 'Beim Check-up lässt man sich vom Hausarzt untersuchen.', 'richtig'),
         mc('l36', 36, 'Der Check-up 35 …', options(
           ['a', 'kostet nichts.'],
           ['b', 'ist für kranke Menschen.'],
           ['c', 'ist für alle 35-Jährigen Pflicht.']
         ), 'a'),
         tf('l37', 37, 'Wer arbeitslos ist, muss ins BiZ kommen.', 'falsch'),
-        tf('l38', 38, 'Die Mitarbeiter*innen im BiZ helfen bei Bewerbungsfragen.', 'richtig'),
-        tf('l39', 39, 'Ausländische Mitbürger*innen sollen bestimmte Dokumente mitbringen.', 'richtig'),
+        tf('l38', 38, 'Die Mitarbeiter/-innen im BiZ helfen bei Bewerbungsfragen.', 'richtig'),
+        tf('l39', 39, 'Ausländische Mitbürger/-innen sollen bestimmte Dokumente mitbringen.', 'richtig'),
         mc('l40', 40, 'Ich interessiere ____ sehr für die 1-Zimmer-Wohnung.', options(
           ['a', 'mich'], ['b', 'sich'], ['c', 'dich']
         ), 'a'),
         mc('l41', 41, 'Ich wohne aktuell noch ____ meinen Eltern.', options(
           ['a', 'ohne'], ['b', 'zu'], ['c', 'bei']
         ), 'c'),
-        mc('l42', 42, 'Ich ____ seit einem halben Jahr als Tischlerin beschäftigt.', options(
+        mc('l42', 42, 'Ich ____ seit einem halben Jahr als Tischlerin in der Tischlerei Rapp angestellt.', options(
           ['a', 'habe'], ['b', 'bin'], ['c', 'werde']
         ), 'b'),
-        mc('l43', 43, 'Eine Kopie meines Arbeitsvertrags ____ ich Ihnen gerne schicken.', options(
+        mc('l43', 43, 'Eine Kopie meines Arbeitsvertrags ____ ich Ihnen, falls gewünscht, gerne schicken.', options(
           ['a', 'kann'], ['b', 'muss'], ['c', 'soll']
         ), 'a'),
         mc('l44', 44, 'Ich ____ mich sehr über einen Besichtigungstermin freuen.', options(
           ['a', 'hätte'], ['b', 'würde'], ['c', 'wäre']
         ), 'b'),
-        mc('l45', 45, 'Sie können mich telefonisch ____ meiner Mobilnummer erreichen.', options(
+        mc('l45', 45, 'Sie können mich telefonisch ____ meiner Mobilnummer 0172/9973186 erreichen.', options(
           ['a', 'durch'], ['b', 'auf'], ['c', 'unter']
         ), 'c')
       ],
@@ -498,7 +499,7 @@
         mc('h11', 11, 'Wann findet die Lieferung statt?', options(
           ['a', 'Am Montag.'], ['b', 'Am Mittwochnachmittag.'], ['c', 'Am Freitagnachmittag.']
         ), 'b'),
-        tf('h12', 12, 'Frau Nowak telefoniert mit dem Deutschlehrer.', 'richtig'),
+        tf('h12', 12, 'Frau Nowak telefoniert mit dem Klassenlehrer.', 'richtig'),
         mc('h13', 13, 'Was soll Frau Nowak tun?', options(
           ['a', 'Ihrem Sohn bei den Hausaufgaben helfen.'], ['b', 'Einen Nachhilfelehrer suchen.'], ['c', 'Ihren Sohn mittags länger in der Schule lassen.']
         ), 'c'),
@@ -550,9 +551,89 @@
             prompt: 'In Ihrer Wohnung schließen die Fenster nicht richtig. Deshalb ist es kalt in der Wohnung. Sie haben Ihren Vermieter, Herrn Schneider, schon angerufen. Aber nichts ist seitdem passiert. Schreiben Sie an Herrn Schneider.',
             points: ['Grund für Ihr Schreiben', 'Warum eine kalte Wohnung schlecht ist', 'Was Sie wollen', 'Was Sie tun, wenn nichts passiert'],
             recipient: 'Herr Schneider'
+          },
+          {
+            id: 'C',
+            title: 'Aufgabe C · Geburtstag absagen (Treffpunkt)',
+            prompt: 'Eine Freundin / Ein Freund hat Sie für Samstagabend ab 20 Uhr zu einer Geburtstagsparty eingeladen. Sie haben keine Zeit. Schreiben Sie Ihrer Freundin / Ihrem Freund eine kurze Mitteilung.',
+            points: ['Dank für die Einladung', 'Entschuldigung', 'Grund für die Absage', 'Vorschlag für ein anderes Treffen'],
+            recipient: 'Liebe / Lieber ...'
+          },
+          {
+            id: 'D',
+            title: 'Aufgabe D · Fernseher reklamieren (Treffpunkt)',
+            prompt: 'Sie haben vor drei Monaten im Kaufhaus Rödling am Markt einen Fernseher gekauft. Jetzt ist er kaputt. Sie erreichen in der Abteilung für Fernseher telefonisch niemanden. Deshalb schreiben Sie eine E-Mail.',
+            points: ['Grund für Ihr Schreiben', 'Garantie', 'Reparatur oder neuer Fernseher?', 'wie Sie erreichbar sind'],
+            recipient: 'Sehr geehrte Damen und Herren'
           }
         ]
       }
+    },
+
+    jugendintegrationskurs: {
+      title: 'Jugendintegrationskurs · Lesen',
+      provider: 'Lokales PDF · Übungssatz Jugendintegrationskurs',
+      tag: 'nur Lesen · 25 Originalfragen · Lösungsschlüssel in der PDF',
+      url: 'exam/DTZ_UEbungssatz_Jugendintegrationskurs - lesen.pdf',
+      hoeren: [],
+      lesen: [
+        mc('l21', 21, 'Sie machen gerne Reisen mit der Bahn.', options(
+          ['a', '3 SAT'], ['b', 'ARTE'], ['c', 'anderer Sender']
+        ), 'a'),
+        mc('l22', 22, 'Sie suchen neue Rezepte für Kuchen und Torten.', options(
+          ['a', 'RTL'], ['b', 'SAT 1'], ['c', 'anderer Sender']
+        ), 'b'),
+        mc('l23', 23, 'Sie sehen gerne Tiersendungen.', options(
+          ['a', 'SAT 1'], ['b', 'ZDF'], ['c', 'anderer Sender']
+        ), 'c'),
+        mc('l24', 24, 'Sie haben abends Lust auf einen romantischen Film.', options(
+          ['a', 'Das Erste'], ['b', 'RTL'], ['c', 'anderer Sender']
+        ), 'c'),
+        mc('l25', 25, 'Sie möchten sich über neue Filme informieren.', options(
+          ['a', 'RTL'], ['b', 'ZDF'], ['c', 'anderer Sender']
+        ), 'a'),
+        mc('l26', 26, 'Sie möchten Ihrer neunjährigen Nichte bei den Deutsch-Aufgaben helfen.', matching, 'h'),
+        mc('l27', 27, 'Ein Freund studiert Arabisch und muss viele neue Wörter lernen.', matching, 'd'),
+        mc('l28', 28, 'Eine Bekannte sucht Arbeit und möchte sich auf Jobinterviews vorbereiten.', matching, 'f'),
+        mc('l29', 29, 'Eine Freundin möchte gerne Online-Kochkurse geben.', matching, 'x'),
+        mc('l30', 30, 'Eine Bekannte sucht einen Nebenjob als Nachhilfelehrerin.', matching, 'e'),
+        tf('l31', 31, 'Das „Girokonto Studi Plus“ gibt es schon lange.', 'falsch'),
+        mc('l32', 32, 'Was muss man für das „Girokonto Studi Plus“ bezahlen?', options(
+          ['a', 'Einmal 15 Euro.'], ['b', 'Es ist kostenlos.'], ['c', 'Jeden Monat 15 Euro.']
+        ), 'a'),
+        tf('l33', 33, 'Aleks renoviert seine Wohnung.', 'richtig'),
+        mc('l34', 34, 'Torben', options(
+          ['a', 'fährt nicht gerne Bus.'], ['b', 'hatte am Samstag kein Auto.'], ['c', 'ist mit dem Fahrrad gekommen.']
+        ), 'b'),
+        tf('l35', 35, 'Frau Gül soll 79,90 Euro bezahlen.', 'falsch'),
+        mc('l36', 36, 'Frau Gül', options(
+          ['a', 'hat am 10. April einen neuen Computer gekauft.'],
+          ['b', 'hat am 14. Mai ein Abonnement bestellt.'],
+          ['c', 'hat am 17. Mai eine Rechnung bekommen.']
+        ), 'c'),
+        tf('l37', 37, 'In der Bibliothek kann man ins Internet gehen.', 'richtig'),
+        tf('l38', 38, 'Für manche Medien muss man extra bezahlen.', 'falsch'),
+        tf('l39', 39, 'Schülerinnen und Schüler zahlen € 9 im Monat.', 'falsch'),
+        mc('l40', 40, '____ Damen und Herren,', options(
+          ['a', 'Guten Tag'], ['b', 'Liebe'], ['c', 'Sehr geehrte']
+        ), 'c'),
+        mc('l41', 41, 'am 10. April ____ wir bei Ihnen ein Bett, Modell „Cuba“, bestellt.', options(
+          ['a', 'haben'], ['b', 'sind'], ['c', 'wollten']
+        ), 'a'),
+        mc('l42', 42, 'Wir sollten das Bett am 08. Mai ____.', options(
+          ['a', 'bekommen'], ['b', 'haben'], ['c', 'senden']
+        ), 'a'),
+        mc('l43', 43, '____ ist das Bett bis heute nicht angekommen.', options(
+          ['a', 'Aber'], ['b', 'Deshalb'], ['c', 'Leider']
+        ), 'c'),
+        mc('l44', 44, 'Bitte teilen Sie uns mit, ____ Sie das Bett liefern werden.', options(
+          ['a', 'wann'], ['b', 'wenn'], ['c', 'wie']
+        ), 'a'),
+        mc('l45', 45, 'Mit freundlichen ____', options(
+          ['a', 'Gruß'], ['b', 'Grüße'], ['c', 'Grüßen']
+        ), 'c')
+      ],
+      schreiben: { tasks: [] }
     },
 
     hueberModul5: {
