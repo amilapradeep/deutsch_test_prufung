@@ -882,6 +882,93 @@
         ), 'd')
       ],
       schreiben: { tasks: [] }
+    },
+
+    // Original DTZ-style practice. These are predictions of plausible everyday situations,
+    // NOT official exam tasks or photographs; the official PDF is linked only for the format.
+    prognose1: {
+      title: 'Prognose 1 · Gesundheit & Termine',
+      provider: 'DTZ Sprint · eigene Übung',
+      tag: 'Sprechen + Schreiben',
+      practice: true,
+      url: 'https://www.gast.de/fileadmin/gast.de/GAST/5_DTZ/PDF/gast_DTZ_UEbungssatz_1.pdf',
+      lesen: [], hoeren: [],
+      sprechen: {
+        teil2: {
+          thema: 'Gesundheit und Termine',
+          bildA: 'Im Wartezimmer einer Arztpraxis sitzt eine Person mit einer Terminbestätigung auf dem Handy. An der Anmeldung spricht eine andere Person mit einer Mitarbeiterin.',
+          bildB: 'In einer Apotheke berät eine Mitarbeiterin eine Kundin. Auf der Theke liegen ein Rezept und eine Medikamentenschachtel.',
+          fragen: [
+            'Was tun Sie, wenn Sie einen Arzttermin brauchen? Erzählen Sie von einer Erfahrung.',
+            'Was ist für Sie besser: ein Termin per Telefon oder online? Warum?',
+            'Wie funktioniert die medizinische Versorgung in Ihrem Herkunftsland? Was ist anders?'
+          ]
+        },
+        teil3: {
+          situation: 'Eine Person aus Ihrem Deutschkurs ist neu in der Stadt und sucht eine Hausarztpraxis. Sie möchten zusammen helfen und einen Informationsnachmittag für neue Kursteilnehmende organisieren.',
+          punkte: ['Wann und wo treffen Sie sich?', 'Welche Informationen über Arztpraxen sammeln Sie?', 'Wen können Sie um Hilfe bitten?', 'Wie informieren Sie die anderen im Kurs?', 'Wer übernimmt welche Aufgabe?']
+        }
+      },
+      schreiben: { tasks: [
+        { id: 'A', title: 'Aufgabe A · Termin verschieben', prompt: 'Sie haben nächste Woche einen Termin in einer Arztpraxis. Wegen einer neuen Arbeitszeit können Sie nicht kommen. Schreiben Sie eine E-Mail an die Praxis.', points: ['Grund für Ihr Schreiben', 'Warum Sie den Termin nicht wahrnehmen können', 'Bitte um einen neuen Termin', 'Wann Sie Zeit haben'], recipient: 'Sehr geehrtes Praxisteam' },
+        { id: 'B', title: 'Aufgabe B · Gesundheitskurs', prompt: 'Sie möchten einen Kurs über gesunde Ernährung im Stadtteilzentrum besuchen. Schreiben Sie eine E-Mail an Frau Berger vom Stadtteilzentrum.', points: ['Warum Sie sich für den Kurs interessieren', 'Welche Erfahrungen Sie schon haben', 'Frage nach Terminen und Dauer', 'Frage nach Kosten und Anmeldung'], recipient: 'Sehr geehrte Frau Berger' }
+      ] }
+    },
+    prognose2: {
+      title: 'Prognose 2 · Schule & Familie',
+      provider: 'DTZ Sprint · eigene Übung',
+      tag: 'Sprechen + Schreiben',
+      practice: true,
+      url: 'https://www.gast.de/fileadmin/gast.de/GAST/5_DTZ/PDF/gast_DTZ_UEbungssatz_2.pdf',
+      lesen: [], hoeren: [],
+      sprechen: {
+        teil2: {
+          thema: 'Schule und Kinderbetreuung',
+          bildA: 'In einem Klassenzimmer sitzen Eltern mit einer Lehrerin an einem Tisch. Auf dem Tisch liegen Schulhefte und ein Stundenplan.',
+          bildB: 'Vor einer Schule verabschiedet sich eine erwachsene Person von einem Kind. Andere Kinder stehen mit Schulranzen am Eingang.',
+          fragen: [
+            'Wie informieren sich Eltern über die Schule ihrer Kinder? Haben Sie damit Erfahrungen?',
+            'Was ist wichtig, damit Kinder sicher zur Schule kommen? Warum?',
+            'Wie war der Schulalltag in Ihrem Herkunftsland? Was ist hier anders?'
+          ]
+        },
+        teil3: {
+          situation: 'Sie und eine andere Person aus dem Elternbeirat möchten für die Schule einen kleinen Flohmarkt organisieren. Das Geld soll für neue Bücher verwendet werden.',
+          punkte: ['Wann und wo soll der Flohmarkt stattfinden?', 'Wer kann Sachen mitbringen?', 'Wie laden Sie Familien ein?', 'Was brauchen Sie vor Ort?', 'Wer fragt die Schulleitung um Erlaubnis?']
+        }
+      },
+      schreiben: { tasks: [
+        { id: 'A', title: 'Aufgabe A · Betreuung', prompt: 'Sie arbeiten jetzt nachmittags und brauchen für Ihr Kind einen Platz in der Nachmittagsbetreuung. Schreiben Sie eine E-Mail an Frau Yilmaz im Schulbüro.', points: ['Grund für Ihr Schreiben', 'Alter und Klasse Ihres Kindes', 'An welchen Tagen Sie Betreuung brauchen', 'Frage nach Plätzen und Kosten'], recipient: 'Sehr geehrte Frau Yilmaz' },
+        { id: 'B', title: 'Aufgabe B · Elternabend', prompt: 'Sie können nicht zum Elternabend kommen, weil Sie an diesem Abend arbeiten müssen. Schreiben Sie eine E-Mail an den Klassenlehrer, Herrn Brandt.', points: ['Grund für Ihr Schreiben', 'Warum Sie nicht kommen können', 'Frage nach den wichtigsten Informationen', 'Vorschlag für einen anderen Gesprächstermin'], recipient: 'Sehr geehrter Herr Brandt' }
+      ] }
+    },
+    prognose3: {
+      title: 'Prognose 3 · Mobilität & Alltag',
+      provider: 'DTZ Sprint · eigene Übung',
+      tag: 'Sprechen + Schreiben',
+      practice: true,
+      url: 'https://shop.telc.net/media/catalog/product/file/5/0/5010-b00-020101_barrierefrei_web.pdf',
+      lesen: [], hoeren: [],
+      sprechen: {
+        teil2: {
+          thema: 'Unterwegs in der Stadt',
+          bildA: 'An einer Bushaltestelle zeigt eine Person einer anderen Person einen Fahrplan. Mehrere Menschen warten mit Taschen auf den Bus.',
+          bildB: 'Vor einem Bahnhof schließt eine Person ihr Fahrrad an einem Fahrradständer ab. Im Hintergrund stehen Menschen an einem Fahrkartenautomaten.',
+          fragen: [
+            'Wie kommen Sie meistens zur Arbeit oder zum Deutschkurs? Warum?',
+            'Erzählen Sie von einem Problem unterwegs. Wie haben Sie es gelöst?',
+            'Was sind Vor- und Nachteile von Fahrrad und öffentlichen Verkehrsmitteln in Ihrer Stadt?'
+          ]
+        },
+        teil3: {
+          situation: 'Ein Freund zieht in eine andere Wohnung innerhalb der Stadt. Sie und Ihre Gesprächspartnerin / Ihr Gesprächspartner möchten beim Umzug helfen.',
+          punkte: ['Wann können Sie helfen?', 'Wie transportieren Sie die Möbel und Kartons?', 'Wer kann noch mithelfen?', 'Was müssen Sie vorher besorgen?', 'Wer kümmert sich um Essen und Getränke?']
+        }
+      },
+      schreiben: { tasks: [
+        { id: 'A', title: 'Aufgabe A · Monatskarte verloren', prompt: 'Sie haben Ihre Monatskarte für den Bus verloren. Schreiben Sie eine E-Mail an den Kundenservice des Verkehrsunternehmens.', points: ['Grund für Ihr Schreiben', 'Wann und wo Sie die Karte verloren haben', 'Bitte um eine Ersatzkarte', 'Frage nach Kosten und Abholung'], recipient: 'Sehr geehrtes Serviceteam' },
+        { id: 'B', title: 'Aufgabe B · Arbeitszeiten', prompt: 'Ihr Bus fährt ab nächsten Monat morgens später. Deshalb kommen Sie nicht mehr pünktlich zur Arbeit. Schreiben Sie eine E-Mail an Ihre Vorgesetzte, Frau Krüger.', points: ['Grund für Ihr Schreiben', 'Was sich beim Busfahrplan ändert', 'Vorschlag für neue Arbeitszeiten', 'Bitte um ein kurzes Gespräch'], recipient: 'Sehr geehrte Frau Krüger' }
+      ] }
     }
   };
 })();

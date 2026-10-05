@@ -1,10 +1,10 @@
 # DTZ Sprint · B1 Prüfungstrainer
 
-Lokale Lernseite zum Üben des **Deutsch-Tests für Zuwanderer (DTZ)** auf A2–B1-Niveau. Die Seite enthält derzeit zehn Übungstests mit den Bereichen Lesen, Hören und Schreiben sowie einem lokalen Hörübungs-Test.
+Lokale Lernseite zum Üben des **Deutsch-Tests für Zuwanderer (DTZ)** auf A2–B1-Niveau. Die Seite enthält zehn vorhandene Tests sowie drei eigene Fokusübungen für Sprechen und Schreiben. Die Fokusübungen sind keine vollständigen DTZ-Prüfungen.
 
 ## Aktueller Stand
 
-- 10 Übungstests:
+- 13 Einträge (10 vorhandene Tests + 3 eigene Fokusübungen):
   - g.a.s.t. Übungssatz 1
   - g.a.s.t. Übungssatz 2
   - telc „Auf jeden Fall! B1.2“
@@ -15,9 +15,14 @@ Lokale Lernseite zum Üben des **Deutsch-Tests für Zuwanderer (DTZ)** auf A2–
   - Paper 1 · Hören, Lesen & Schreiben
   - Modul 5: Simulation · Hueber
   - DTZ B1 · Hörübungen Teil 1–4 (lokal)
+  - Prognose 1: Gesundheit & Termine (eigene Übung)
+  - Prognose 2: Schule & Familie (eigene Übung)
+  - Prognose 3: Mobilität & Alltag (eigene Übung)
+- Sprechen: Teil 1 (Vorstellen), Teil 2 (zwei beschriebene hypothetische Fotos zum selben Thema), Teil 3 (gemeinsam planen); Sprechnotizen bleiben lokal. Für alte Tests erscheint ausdrücklich eine separate Zusatzübung, nicht die Original-Sprechaufgabe.
+- Quellenanalyse: [`exam/sprechen-schreiben-analyse.md`](exam/sprechen-schreiben-analyse.md)
 - Lesen: Fragen, Antworten, automatische Auswertung und Lösungshinweise
 - Hören: Fragen, Auswertung und Audio-Player
-- Schreiben: zwei Aufgaben pro Test, Textfeld, Wortzählung und Selbstcheck
+- Schreiben: bis zu zwei Aufgaben pro Test, Textfeld, Wortzählung und Selbstcheck; keine automatische Bewertung
 - Fortschritt wird lokal im Browser gespeichert (`localStorage`)
 - Keine Datenbank, kein Backend, kein Build-Prozess
 
@@ -28,7 +33,7 @@ Lokale Lernseite zum Üben des **Deutsch-Tests für Zuwanderer (DTZ)** auf A2–
 - Python 3
 - Moderner Browser: Chrome, Edge, Firefox oder Safari
 - Git nur erforderlich, wenn das Repository geklont werden soll
-- Node.js, npm und weitere Pakete sind nicht erforderlich
+- Node.js, npm und weitere Pakete sind für die Website nicht erforderlich (optional für Syntax- und Smoke-Tests)
 
 ### Windows
 
@@ -101,10 +106,20 @@ Ein Test benötigt mindestens:
 
 Fragen verwenden die Felder `id`, `number`, `prompt`, `options`, `answer` und optional `type`. Antwortoptionen haben `value` und `label`. Für Richtig/Falsch `type: 'tf'` verwenden.
 
+## Optionaler Smoke-Test
+
+```bash
+node tests/speaking-practice.test.js
+node --check app.js
+node --check exam-data.js
+```
+
+Für die Website selbst ist Node.js nicht erforderlich.
+
 ## Geplante nächste Schritte
 
 - Weitere echte DTZ-Übungstests ergänzen
-- Zusätzliche Beispieltests im gleichen Datenformat erstellen
+- Für bestehende Tests Original-Sprechaufgaben einschließlich Fotoquelle (nach Rechteprüfung) erfassen
 - Prüfungs-Timer und realistischere Prüfungssimulation ergänzen
 - Bedienung, Barrierefreiheit und mobile Darstellung weiter verbessern
 - Automatische Daten-/Browser-Tests ergänzen
@@ -112,4 +127,4 @@ Fragen verwenden die Felder `id`, `number`, `prompt`, `options`, `answer` und op
 
 ## Hinweise zu Quellen
 
-Die Testdaten und Originalmaterialien stammen aus den jeweils verlinkten offiziellen Quellen. Vor einer öffentlichen Veröffentlichung müssen Nutzungsrechte, Audio-Dateien und PDF-Inhalte geprüft werden. Remote-PDFs und Remote-Audios benötigen Internetzugang; lokale Dateien unter `exam/` und `audio/` bleiben lokal verfügbar.
+Die vorhandenen Testdaten und Originalmaterialien stammen aus den jeweils verlinkten offiziellen Quellen; die drei Prognoseübungen und die Zusatz-Sprechübung sind eigene, nicht-offizielle Aufgaben. Verlinkte PDFs dienen dort nur als Formatvorlage. Vor einer öffentlichen Veröffentlichung müssen Nutzungsrechte, Audio-Dateien und PDF-Inhalte geprüft werden. Remote-PDFs und Remote-Audios benötigen Internetzugang; lokale Dateien unter `exam/` und `audio/` bleiben lokal verfügbar.

@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="DTZ B1 Übung: Lesen, Hören und Schreiben" />
+  <meta name="description" content="DTZ B1 Übung: Hören, Lesen, Schreiben und Sprechen" />
   <title>DTZ Sprint · B1 Prüfungstrainer</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=19" />
+  <link rel="stylesheet" href="styles.css?v=20" />
 </head>
 <body>
   <div class="app-shell">
@@ -33,7 +33,7 @@
       </section>
 
       <section class="control-panel" aria-label="Testauswahl">
-        <div class="section-heading"><div><p class="eyebrow">01 · Auswahl</p><h2>Wähle ein Originalpapier</h2></div><span class="source-count" id="sourceCount">10 Tests</span></div>
+        <div class="section-heading"><div><p class="eyebrow">01 · Auswahl</p><h2>Wähle einen Test oder eine Übung</h2></div><span class="source-count" id="sourceCount">13 Tests</span></div>
         <div class="paper-grid" id="paperGrid"></div>
       </section>
 
@@ -43,23 +43,24 @@
           <a class="source-link" id="sourceLink" target="_blank" rel="noreferrer">Original-PDF öffnen ↗</a>
         </div>
         <div class="tabs" role="tablist" aria-label="Prüfungsteile">
-          <button class="tab active" data-section="lesen" role="tab" aria-selected="true"><span class="tab-icon">L</span>Lesen <b id="lesenProgress">0%</b></button>
-          <button class="tab" data-section="hoeren" role="tab" aria-selected="false"><span class="tab-icon">H</span>Hören <b id="hoerenProgress">0%</b></button>
+          <button class="tab active" data-section="hoeren" role="tab" aria-selected="true"><span class="tab-icon">H</span>Hören <b id="hoerenProgress">0%</b></button>
+          <button class="tab" data-section="lesen" role="tab" aria-selected="false"><span class="tab-icon">L</span>Lesen <b id="lesenProgress">0%</b></button>
           <button class="tab" data-section="schreiben" role="tab" aria-selected="false"><span class="tab-icon">S</span>Schreiben <b id="schreibenProgress">0%</b></button>
+          <button class="tab" data-section="sprechen" role="tab" aria-selected="false"><span class="tab-icon">SP</span>Sprechen <b id="sprechenProgress">Übung</b></button>
         </div>
         <div id="sectionContent"></div>
       </section>
 
       <section class="info-grid">
         <article class="info-card accent-card"><span class="card-number">01</span><h3>So übst du</h3><p>Erst ohne Hilfe lösen. Dann „Abschnitt abgeben“. Falsche Antworten zeigen genau, worauf du achten musst.</p><button type="button" class="info-action" data-info-action="practice">Zum aktuellen Test →</button></article>
-        <article class="info-card"><span class="card-number">02</span><h3>DTZ-Benchmark</h3><p>Hören + Lesen zusammen: 33–45 Punkte = B1 · 20–32 = A2. Schreiben wird normalerweise von Prüfenden bewertet.</p><button type="button" class="info-action" data-info-action="benchmark">Ergebnis anzeigen →</button></article>
+        <article class="info-card"><span class="card-number">02</span><h3>DTZ-Benchmark</h3><p>Hören + Lesen zusammen: 33–45 Punkte = B1 · 20–32 = A2. Schreiben und Sprechen werden hier nicht automatisch bewertet.</p><button type="button" class="info-action" data-info-action="benchmark">Ergebnis anzeigen →</button></article>
         <article class="info-card"><span class="card-number">03</span><h3>Schreiben</h3><p>Schreibe deine Antwort hier. Nutze die vier Leitpunkte und kopiere deinen Text bei Bedarf in diesen Chat für Feedback.</p><button type="button" class="info-action" data-info-action="writing">Schreiben öffnen →</button></article>
       </section>
     </main>
     <footer><span>DTZ Sprint · lokale Lernhilfe</span><span>Originalquelle oben verlinkt</span></footer>
   </div>
   <div class="toast" id="toast" role="status"></div>
-  <script src="exam-data.js?v=8"></script>
-  <script src="app.js?v=18"></script>
+  <script src="exam-data.js?v=9"></script>
+  <script src="app.js?v=20"></script>
 </body>
 </html>

@@ -217,7 +217,7 @@ Object.assign(SOURCES, window.EXTRA_SOURCES || {});
 
 const state = {
   paper: 'gast1',
-  section: 'lesen',
+  section: 'hoeren',
   checked: {},
   text: {},
   checks: {},
@@ -238,7 +238,7 @@ const saved = readSavedState();
 if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
   Object.assign(state, saved);
   state.paper = SOURCES[state.paper] ? state.paper : 'gast1';
-  state.section = ['lesen', 'hoeren', 'schreiben'].includes(state.section) ? state.section : 'lesen';
+  state.section = ['hoeren', 'lesen', 'schreiben', 'sprechen'].includes(state.section) ? state.section : 'hoeren';
   state.checked = saved.checked && typeof saved.checked === 'object' && !Array.isArray(saved.checked) ? saved.checked : {};
   state.text = saved.text && typeof saved.text === 'object' && !Array.isArray(saved.text) ? saved.text : {};
   state.checks = saved.checks && typeof saved.checks === 'object' && !Array.isArray(saved.checks) ? saved.checks : {};
@@ -267,6 +267,7 @@ function timerFor(paperId = state.paper, section) {
 function sectionHasContent(paperId, section) {
   const paper = SOURCES[paperId];
   if (!paper) return false;
+  if (section === 'sprechen') return true;
   return section === 'schreiben'
     ? Boolean(paper.schreiben?.tasks?.length)
     : Boolean(paper[section]?.length);
@@ -464,7 +465,9 @@ function resetSection(section) {
   if (!sectionHasContent(state.paper, section)) return;
   const warning = section === 'schreiben'
     ? 'Alle Schreibtexte und Selbstchecks dieses Tests sowie die Schreibzeit endgültig löschen?'
-    : `${TIMER_LABELS[section]}-Abschnitt wirklich zurücksetzen? Antworten und Zeit werden gelöscht.`;
+    : section === 'sprechen'
+      ? 'Alle Sprechnotizen dieses Tests endgültig löschen?'
+      : `${TIMER_LABELS[section]}-Abschnitt wirklich zurücksetzen? Antworten und Zeit werden gelöscht.`;
   if (!confirm(warning)) return;
   if (section === 'hoeren') $('#hearingAudio')?.pause();
   const paperAnswers = state.checked[state.paper];
@@ -474,13 +477,15 @@ function resetSection(section) {
     delete paperAnswers[`${section}_locked`];
     if (!Object.keys(paperAnswers).length) delete state.checked[state.paper];
   }
-  if (section === 'schreiben') {
+  if (section === 'schreiben' || section === 'sprechen') {
     if (state.text[state.paper]) {
-      delete state.text[state.paper].schreiben;
+      delete state.text[state.paper][section];
       if (!Object.keys(state.text[state.paper]).length) delete state.text[state.paper];
     }
-    delete state.checks[state.paper];
-    state.writingTask = 'A';
+    if (section === 'schreiben') {
+      delete state.checks[state.paper];
+      state.writingTask = 'A';
+    }
   }
   if (state.timers[state.paper]) {
     delete state.timers[state.paper][section];
@@ -488,7 +493,7 @@ function resetSection(section) {
   }
   save();
   renderAll();
-  showToast(`${TIMER_LABELS[section]} zurückgesetzt`);
+  showToast(`${section === 'sprechen' ? 'Sprechen' : TIMER_LABELS[section]} zurückgesetzt`);
 }
 
 function renderPaperCards() {
@@ -498,7 +503,7 @@ function renderPaperCards() {
   paperGrid.querySelectorAll('[data-paper]').forEach(button => button.addEventListener('click', () => {
     state.paper = button.dataset.paper;
     const selectedPaper = SOURCES[state.paper];
-    state.section = selectedPaper.lesen.length ? 'lesen' : selectedPaper.hoeren.length ? 'hoeren' : 'schreiben';
+    state.section = selectedPaper.hoeren?.length ? 'hoeren' : selectedPaper.lesen?.length ? 'lesen' : selectedPaper.schreiben?.tasks?.length ? 'schreiben' : 'sprechen';
     renderAll();
     save();
     $('#workspace').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -508,18 +513,22 @@ function renderPaperCards() {
 function renderAll() {
   processExpiredTimers();
   const p = current();
+  if (!sectionHasContent(state.paper, state.section)) state.section = sectionHasContent(state.paper, 'schreiben') ? 'schreiben' : 'sprechen';
   renderPaperCards();
   $('#paperTitle').textContent = p.title;
-  $('#paperMeta').textContent = `${p.provider} · ${p.tag} · Fragen und Antwortschlüssel aus der Quelle`;
+  $('#paperMeta').textContent = p.practice
+    ? `${p.provider} · ${p.tag} · Eigene Übungsaufgaben; keine offiziellen Prüfungsfragen`
+    : `${p.provider} · ${p.tag} · Fragen und Antwortschlüssel aus der Quelle`;
   $('#paperScore').innerHTML = paperScoreHTML(state.paper);
   $('#sourceLink').href = p.url;
-  $('#sourceLink').textContent = 'Quelle öffnen ↗';
+  $('#sourceLink').textContent = p.practice ? 'Formatvorlage öffnen ↗' : 'Quelle öffnen ↗';
   document.querySelectorAll('.tab').forEach(tab => {
+    tab.disabled = !sectionHasContent(state.paper, tab.dataset.section);
     const active = tab.dataset.section === state.section;
     tab.classList.toggle('active', active);
     tab.setAttribute('aria-selected', active);
   });
-  ['lesen', 'hoeren', 'schreiben'].forEach(section => {
+  ['hoeren', 'lesen', 'schreiben', 'sprechen'].forEach(section => {
     $(`#${section}Progress`).textContent = progress(section);
   });
   renderSection();
@@ -527,7 +536,9 @@ function renderAll() {
 
 function progress(section) {
   if (sectionLocked(state.paper, section)) return 'gesperrt';
+  if (section === 'sprechen') return 'Übung';
   if (section === 'schreiben') {
+    if (!current().schreiben?.tasks?.length) return '—';
     const task = writingTask();
     return task ? (draftFor(task.id).trim() ? '1/1' : '0/1') : '—';
   }
@@ -535,7 +546,7 @@ function progress(section) {
   return items.length ? `${Object.keys(answersFor(section)).length}/${items.length}` : '—';
 }
 
-const OBJECTIVE_SECTIONS = ['lesen', 'hoeren'];
+const OBJECTIVE_SECTIONS = ['hoeren', 'lesen'];
 const SECTION_LABELS = { lesen: 'Lesen', hoeren: 'Hören' };
 
 function paperResult(paperId) {
@@ -571,6 +582,7 @@ function benchmarkLabel(score) {
 
 function paperScoreLabel(paperId) {
   const result = paperResult(paperId);
+  if (!result.sections.length) return 'Sprechen + Schreiben · Selbstübung';
   if (!result.submittedSections.length) return 'Noch kein Ergebnis';
   if (result.complete) {
     const hasListening = result.sections.some(section => section.section === 'hoeren');
@@ -583,6 +595,7 @@ function paperScoreLabel(paperId) {
 
 function paperScoreHTML(paperId) {
   const result = paperResult(paperId);
+  if (!result.sections.length) return 'Sprechen und Schreiben: Selbstübung ohne automatische Bewertung.';
   if (!result.submittedSections.length) {
     return 'Noch kein Ergebnis. Abschnitt abgeben, um Punkte zu sehen.';
   }
@@ -599,6 +612,7 @@ function paperScoreHTML(paperId) {
 
 function renderSection() {
   if (state.section === 'schreiben') renderWriting();
+  else if (state.section === 'sprechen') renderSpeaking();
   else renderQuestions(state.section);
 }
 
@@ -748,12 +762,12 @@ function scoreSection(items, answers) {
 }
 
 function writingTask() {
-  const tasks = current().schreiben.tasks;
+  const tasks = current().schreiben?.tasks || [];
   return tasks.find(task => task.id === state.writingTask) || tasks[0];
 }
 
 function renderWriting() {
-  const tasks = current().schreiben.tasks;
+  const tasks = current().schreiben?.tasks || [];
   if (!tasks.length) {
     content.innerHTML = '<div class="section-intro"><div><h3>Schreiben</h3><p>Für diesen Test sind keine Schreiben-Aufgaben hinterlegt.</p></div></div>';
     return;
@@ -764,7 +778,7 @@ function renderWriting() {
   const writingIntro = 'Wähle eine Schreibaufgabe. Der Timer erinnert dich an die Zeit, sperrt aber keine Texte.';
   const copyButton = '<button type="button" class="secondary-button" id="copyWriting">Text kopieren</button>';
   content.innerHTML = `<div class="section-intro"><div><h3>Schreiben</h3><p>${writingIntro}</p></div>${sectionActionsHTML('schreiben', copyButton)}</div>
-    <div class="paper-grid writing-task-grid">${tasks.map(option => `<button class="paper-card ${option.id === task.id ? 'selected' : ''}" data-writing-task="${option.id}"><span class="paper-no">${option.id}</span><strong>${esc(option.title)}</strong><small>Originalaufgabe</small></button>`).join('')}</div>
+    <div class="paper-grid writing-task-grid">${tasks.map(option => `<button class="paper-card ${option.id === task.id ? 'selected' : ''}" data-writing-task="${option.id}"><span class="paper-no">${option.id}</span><strong>${esc(option.title)}</strong><small>${current().practice ? 'Eigene Übung' : 'Originalaufgabe'}</small></button>`).join('')}</div>
     <div class="write-box"><div class="writing-situation"><h4>${esc(task.title)}</h4><p>${esc(task.prompt)}</p><ul class="points">${task.points.map(point => `<li>${esc(point)}</li>`).join('')}</ul></div>
     <textarea id="writingText" placeholder="${esc(task.recipient)},\n\n... deine Nachricht ...\n\nMit freundlichen Grüßen\n..."></textarea>
     <div class="write-tools"><span class="word-count" id="wordCount">0 Wörter</span><span class="muted">Tipp: Anrede + 4 Leitpunkte + Gruß</span></div>
@@ -800,6 +814,35 @@ function renderWriting() {
     save();
   }));
   $('#copyWriting').addEventListener('click', () => copyText(textarea.value, 'Schreibtext kopiert'));
+}
+
+function renderSpeaking() {
+  // Older papers have no transcribed speaking tasks. Reuse clearly labelled supplementary practice.
+  const paper = current();
+  const fallbackId = ['prognose1', 'prognose2', 'prognose3'][Object.keys(SOURCES).indexOf(state.paper) % 3];
+  const speaking = paper.sprechen || SOURCES[fallbackId].sprechen;
+  const extra = !paper.sprechen;
+  const notes = state.text[state.paper]?.sprechen || {};
+  const list = items => `<ul class="speaking-points">${items.map(item => `<li>${esc(item)}</li>`).join('')}</ul>`;
+  const note = (key, label) => `<label class="speaking-notes-label" for="speaking-${key}">Stichpunkte: ${esc(label)}</label><textarea class="speaking-notes" id="speaking-${key}" data-speaking-note="${key}" placeholder="Notiere Stichpunkte und übe dann laut."></textarea>`;
+  const image = (key, label, description) => `<article class="speaking-card"><h5>${label} · mögliches Bild (nur Beschreibung)</h5><p>${esc(description)}</p>${note(key, label)}</article>`;
+  content.innerHTML = `<div class="section-intro"><div><h3>Sprechen</h3><p>Ca. 16 Minuten: Teil 1 vorstellen, Teil 2 Foto beschreiben und über Erfahrungen sprechen, Teil 3 gemeinsam planen. Laut sprechen; Stichpunkte werden lokal gespeichert.</p></div><button type="button" class="secondary-button" data-reset-section="sprechen">Sprechnotizen löschen</button></div>
+    <div class="reading-bank source-note"><strong>${extra ? 'Zusatzübung – nicht aus diesem Originaltest' : 'Eigene Prognose-Übung – keine Originalaufgabe'}</strong><p class="muted">${extra ? 'Für dieses Papier sind keine Sprechaufgaben erfasst. Nutze diese unabhängige Übung oder öffne die Quelle für die Originalbilder.' : 'Bildszenen sind hypothetisch, nicht die wirklichen Prüfungsfotos. Genaue Themen lassen sich nicht vorhersagen.'}</p>${extra ? `<a class="source-link" href="${esc(paper.url)}" target="_blank" rel="noreferrer">Originalquelle öffnen ↗</a>` : ''}</div>
+    <section class="speaking-block"><h4>Teil 1 · Über sich sprechen</h4><p>Stellen Sie sich vor: Name, Geburtsort, Wohnort, Arbeit/Beruf, Familie und Sprachen. Beantworten Sie eine Rückfrage.</p></section>
+    <section class="speaking-block"><h4>Teil 2 · ${esc(speaking.teil2.thema)}</h4><p>Beschreiben Sie eines der möglichen Fotos: Was sehen Sie? Welche Situation ist das? Erzählen Sie danach von Ihren Erfahrungen.</p><div class="speaking-images">${image('bildA', 'Person A', speaking.teil2.bildA)}${image('bildB', 'Person B', speaking.teil2.bildB)}</div><h5>Mögliche Rückfragen</h5>${list(speaking.teil2.fragen)}</section>
+    <section class="speaking-block"><h4>Teil 3 · Gemeinsam etwas planen</h4><p>${esc(speaking.teil3.situation)}</p><p>Machen Sie Vorschläge, fragen Sie nach, reagieren Sie auf Ihre Partnerin / Ihren Partner und entscheiden Sie gemeinsam.</p>${list(speaking.teil3.punkte)}${note('teil3', 'Teil 3')}</section>
+    <p class="muted">Keine Aufnahme und keine automatische Bewertung. Übe möglichst mit einer zweiten Person.</p>`;
+  content.querySelector('[data-reset-section="sprechen"]').addEventListener('click', () => resetSection('sprechen'));
+  content.querySelectorAll('[data-speaking-note]').forEach(textarea => {
+    const key = textarea.dataset.speakingNote;
+    textarea.value = notes[key] || '';
+    textarea.addEventListener('input', () => {
+      if (!state.text[state.paper]) state.text[state.paper] = {};
+      if (!state.text[state.paper].sprechen) state.text[state.paper].sprechen = {};
+      state.text[state.paper].sprechen[key] = textarea.value;
+      save();
+    });
+  });
 }
 
 function updateWordCount() {
