@@ -155,7 +155,7 @@
       ],
       lesen: [
         mc('l21', 21, 'Sie möchten gerne Gemüse anpflanzen.', options(['a', 'Gesundheit'], ['b', 'Kultur & Freizeit'], ['c', 'Wohnen & Bauen']), 'c'),
-        mc('l22', 22, 'Ihre Freundin möchte Krankenschwester werden.', options(['a', 'Download'], ['b', 'Gesundheit'], ['c', 'Wirtschaft & Arbeit']), 'b'),
+        mc('l22', 22, 'Ihre Freundin möchte Krankenschwester werden.', options(['a', 'Download'], ['b', 'Gesundheit'], ['c', 'Wirtschaft & Arbeit']), 'c'),
         mc('l23', 23, 'Sie möchten ein Geschäft mieten.', options(['a', 'Kultur & Freizeit'], ['b', 'Wirtschaft & Arbeit'], ['c', 'Wohnen & Bauen']), 'b'),
         mc('l24', 24, 'Sie verreisen bald. Sie möchten wissen, welche Medikamente Sie mitnehmen sollen.', options(['a', 'Kultur & Freizeit'], ['b', 'Verkehr'], ['c', 'anderer Menüpunkt']), 'c'),
         mc('l25', 25, 'Ihr Sohn soll in der Schule einen Vortrag über die Stadt halten. Wo findet er Informationen?', options(['a', 'Download'], ['b', 'Kultur & Freizeit'], ['c', 'Wohnen & Bauen']), 'b'),
