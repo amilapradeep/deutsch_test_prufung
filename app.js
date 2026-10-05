@@ -214,6 +214,10 @@ const SOURCES = {
 };
 
 Object.assign(SOURCES, window.EXTRA_SOURCES || {});
+// Original speaking pages belong only to their matching existing source.
+Object.entries(window.ORIGINAL_SPEAKING || {}).forEach(([paperId, speaking]) => {
+  if (SOURCES[paperId] && !SOURCES[paperId].practice) SOURCES[paperId].sprechen = speaking;
+});
 
 const state = {
   paper: 'gast1',
@@ -267,7 +271,7 @@ function timerFor(paperId = state.paper, section) {
 function sectionHasContent(paperId, section) {
   const paper = SOURCES[paperId];
   if (!paper) return false;
-  if (section === 'sprechen') return true;
+  if (section === 'sprechen') return Boolean(paper.sprechen?.parts?.length || paper.sprechen?.teil2 || paper.sprechen?.teil3);
   return section === 'schreiben'
     ? Boolean(paper.schreiben?.tasks?.length)
     : Boolean(paper[section]?.length);
@@ -513,7 +517,9 @@ function renderPaperCards() {
 function renderAll() {
   processExpiredTimers();
   const p = current();
-  if (!sectionHasContent(state.paper, state.section)) state.section = sectionHasContent(state.paper, 'schreiben') ? 'schreiben' : 'sprechen';
+  if (!sectionHasContent(state.paper, state.section)) {
+    state.section = ['hoeren', 'lesen', 'schreiben', 'sprechen'].find(section => sectionHasContent(state.paper, section)) || 'hoeren';
+  }
   renderPaperCards();
   $('#paperTitle').textContent = p.title;
   $('#paperMeta').textContent = p.practice
@@ -536,7 +542,7 @@ function renderAll() {
 
 function progress(section) {
   if (sectionLocked(state.paper, section)) return 'gesperrt';
-  if (section === 'sprechen') return 'Übung';
+  if (section === 'sprechen') return sectionHasContent(state.paper, section) ? 'Übung' : '—';
   if (section === 'schreiben') {
     if (!current().schreiben?.tasks?.length) return '—';
     const task = writingTask();
@@ -817,21 +823,29 @@ function renderWriting() {
 }
 
 function renderSpeaking() {
-  // Older papers have no transcribed speaking tasks. Reuse clearly labelled supplementary practice.
   const paper = current();
-  const fallbackId = ['prognose1', 'prognose2', 'prognose3'][Object.keys(SOURCES).indexOf(state.paper) % 3];
-  const speaking = paper.sprechen || SOURCES[fallbackId].sprechen;
-  const extra = !paper.sprechen;
+  const speaking = paper.sprechen;
+  if (!speaking) {
+    content.innerHTML = '<div class="section-intro"><div><h3>Sprechen</h3><p>Die hinterlegte Quelle enthält keine Sprechaufgaben.</p></div></div>';
+    return;
+  }
   const notes = state.text[state.paper]?.sprechen || {};
   const list = items => `<ul class="speaking-points">${items.map(item => `<li>${esc(item)}</li>`).join('')}</ul>`;
   const note = (key, label) => `<label class="speaking-notes-label" for="speaking-${key}">Stichpunkte: ${esc(label)}</label><textarea class="speaking-notes" id="speaking-${key}" data-speaking-note="${key}" placeholder="Notiere Stichpunkte und übe dann laut."></textarea>`;
   const image = (key, label, description) => `<article class="speaking-card"><h5>${label} · mögliches Bild (nur Beschreibung)</h5><p>${esc(description)}</p>${note(key, label)}</article>`;
-  content.innerHTML = `<div class="section-intro"><div><h3>Sprechen</h3><p>Ca. 16 Minuten: Teil 1 vorstellen, Teil 2 Foto beschreiben und über Erfahrungen sprechen, Teil 3 gemeinsam planen. Laut sprechen; Stichpunkte werden lokal gespeichert.</p></div><button type="button" class="secondary-button" data-reset-section="sprechen">Sprechnotizen löschen</button></div>
-    <div class="reading-bank source-note"><strong>${extra ? 'Zusatzübung – nicht aus diesem Originaltest' : 'Eigene Prognose-Übung – keine Originalaufgabe'}</strong><p class="muted">${extra ? 'Für dieses Papier sind keine Sprechaufgaben erfasst. Nutze diese unabhängige Übung oder öffne die Quelle für die Originalbilder.' : 'Bildszenen sind hypothetisch, nicht die wirklichen Prüfungsfotos. Genaue Themen lassen sich nicht vorhersagen.'}</p>${extra ? `<a class="source-link" href="${esc(paper.url)}" target="_blank" rel="noreferrer">Originalquelle öffnen ↗</a>` : ''}</div>
+  const intro = `<div class="section-intro"><div><h3>Sprechen</h3><p>Teil 1 vorstellen, Teil 2 Foto beschreiben und über Erfahrungen sprechen, Teil 3 gemeinsam planen. Laut sprechen; Stichpunkte werden lokal gespeichert.</p></div><button type="button" class="secondary-button" data-reset-section="sprechen">Sprechnotizen löschen</button></div>`;
+  if (speaking.original) {
+    content.innerHTML = `${intro}<div class="reading-bank source-note"><strong>Original-Sprechaufgaben aus diesem Test</strong><p class="muted">${esc(paper.provider)} · Unveränderte PDF-Seiten mit Originalfotos, Aufgaben und vorhandenen Prüfungsfragen. Seitenzahlen beziehen sich auf die PDF-Datei.</p><a class="source-link" href="${esc(speaking.sourceUrl)}" target="_blank" rel="noreferrer">Lokales Original-PDF öffnen ↗</a></div>
+      ${speaking.parts.map(part => `<section class="speaking-block"><h4>${esc(part.title)}</h4>${part.pages.map(page => `<figure class="speaking-original-page"><a href="${esc(speaking.sourceUrl)}#page=${page.number}" target="_blank" rel="noreferrer"><img src="${esc(page.image)}" alt="${esc(part.title)} · Originalseite ${page.number} aus ${esc(paper.title)}" loading="lazy"></a><figcaption>PDF-Seite ${page.number} · ${esc(paper.title)} · <a href="${esc(speaking.sourceUrl)}#page=${page.number}" target="_blank" rel="noreferrer">Im Original-PDF öffnen ↗</a></figcaption></figure><details class="speaking-page-text"><summary>Originaltext der PDF-Seite ${page.number}</summary><p>${esc(page.text)}</p></details>`).join('')}${note(part.id, part.title)}</section>`).join('')}
+      <p class="muted">Keine Aufnahme und keine automatische Bewertung. Übe möglichst mit einer zweiten Person.</p>`;
+  } else {
+    content.innerHTML = `${intro}
+    <div class="reading-bank source-note"><strong>Eigene Prognose-Übung – keine Originalaufgabe</strong><p class="muted">Bildszenen sind hypothetisch, nicht die wirklichen Prüfungsfotos. Genaue Themen lassen sich nicht vorhersagen.</p></div>
     <section class="speaking-block"><h4>Teil 1 · Über sich sprechen</h4><p>Stellen Sie sich vor: Name, Geburtsort, Wohnort, Arbeit/Beruf, Familie und Sprachen. Beantworten Sie eine Rückfrage.</p></section>
     <section class="speaking-block"><h4>Teil 2 · ${esc(speaking.teil2.thema)}</h4><p>Beschreiben Sie eines der möglichen Fotos: Was sehen Sie? Welche Situation ist das? Erzählen Sie danach von Ihren Erfahrungen.</p><div class="speaking-images">${image('bildA', 'Person A', speaking.teil2.bildA)}${image('bildB', 'Person B', speaking.teil2.bildB)}</div><h5>Mögliche Rückfragen</h5>${list(speaking.teil2.fragen)}</section>
     <section class="speaking-block"><h4>Teil 3 · Gemeinsam etwas planen</h4><p>${esc(speaking.teil3.situation)}</p><p>Machen Sie Vorschläge, fragen Sie nach, reagieren Sie auf Ihre Partnerin / Ihren Partner und entscheiden Sie gemeinsam.</p>${list(speaking.teil3.punkte)}${note('teil3', 'Teil 3')}</section>
     <p class="muted">Keine Aufnahme und keine automatische Bewertung. Übe möglichst mit einer zweiten Person.</p>`;
+  }
   content.querySelector('[data-reset-section="sprechen"]').addEventListener('click', () => resetSection('sprechen'));
   content.querySelectorAll('[data-speaking-note]').forEach(textarea => {
     const key = textarea.dataset.speakingNote;

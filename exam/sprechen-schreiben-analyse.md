@@ -1,6 +1,8 @@
 # DTZ Sprechen & Schreiben: Analyse und drei eigene Probesätze
 
-**Status:** Eigene Übung, keine offiziellen oder vorab bekannten Prüfungsaufgaben. Auch die beschriebenen Bilder sind erfunden; es werden keine Bilder eingebunden. Ein bestimmtes Prüfungsthema oder Foto lässt sich **nicht verlässlich vorhersagen**.
+**Status der drei neuen Prognoseübungen:** Eigene Übung, keine offiziellen oder vorab bekannten Prüfungsaufgaben. Nur dort sind Bildbeschreibungen erfunden und keine Bilder eingebunden. Ein bestimmtes Prüfungsthema oder Foto lässt sich **nicht verlässlich vorhersagen**.
+
+**Bestehende Tests:** Original-Sprechaufgaben werden ausschließlich aus der jeweiligen Quelle übernommen, einschließlich Originalfotos. Die PNG-Seiten in `exam/speaking/` sind direkte Darstellungen der lokalen PDFs, keine erzeugten Bildmotive. Wo die Quelle keine Sprech- oder Schreibaufgaben enthält, bleibt der Abschnitt leer.
 
 ## Grundlage (lokale Original-PDFs, Seitenzahlen der PDF-Datei)
 
@@ -12,6 +14,19 @@
 | `Auf_jeden_Fall_B1.2_UEbungstest_DTZ.pdf` | S. 10: Entschuldigung für Sport / Fensterproblem | S. 12–13: Spielplatz, Foto + Erfahrungen | S. 14: VHS-Kurs gemeinsam wählen |
 
 Quellen online (Formatreferenz, **nicht** Quelle der neuen Aufgaben): [g.a.s.t. Übungssatz 1](https://www.gast.de/fileadmin/gast.de/GAST/5_DTZ/PDF/gast_DTZ_UEbungssatz_1.pdf), [g.a.s.t. Übungssatz 2](https://www.gast.de/fileadmin/gast.de/GAST/5_DTZ/PDF/gast_DTZ_UEbungssatz_2.pdf), [telc Übungstest 1](https://shop.telc.net/media/catalog/product/file/5/0/5010-b00-020101_barrierefrei_web.pdf), [telc Auf jeden Fall!](https://www.telc.net/fileadmin/user_upload/Downloads_Verlag/Auf_jeden_Fall/Uebungstests/Auf_jeden_Fall_B1.2_UEbungstest_DTZ.pdf).
+
+## Übernommene Original-Sprechseiten
+
+| Quelltest | Teil 1 | Teil 2 A | Teil 2 B | Teil 3 |
+| --- | --- | --- | --- | --- |
+| g.a.s.t. 1 | 33 | 34 | 35 | 36 |
+| g.a.s.t. 2 | 33 | 34 | 35 | 36 |
+| Auf jeden Fall! | 11 | 12 | 13 | 14 |
+| telc Übungstest 1 | 23 | 24 | 25 | 26 |
+| Goethe DTZ 2009 | 31 | 32 | 33 | 34 |
+| Hueber Modul 5 | 13 | 13–14 | 15 | 16 |
+
+PDF-Seitenzahlen, nicht gedruckte Buchseiten. Hueber Seite 13 enthält sowohl Teil 1 als auch den Beginn von Teil 2 A. Die verfügbaren Prüfungsfragen bleiben auf ihren Originalseiten; extrahierter Text ist zusätzlich aufklappbar. Die vier übrigen hinterlegten PDFs (Modelltest Fragen, Zusätzliche Übungen, Paper 1, Hörübungen Teil 1–4) enthalten keine Sprechaufgaben.
 
 ## Muster statt Scheinprognose
 
